@@ -4,6 +4,12 @@ import { useGameStore } from '../../store/gameStore'
 import { FormationPitch } from '../draft/FormationPitch'
 import { computeOverall } from '../../utils/ratings'
 import type { MatchResult, TeamStanding, DraftedPlayer } from '../../store/gameStore'
+import { FORMATIONS } from '../../data/formations'
+
+function slotPos(dp: DraftedPlayer, formationName: string): string {
+  const slot = FORMATIONS[formationName]?.slots.find(s => s.id === dp.slotId)
+  return slot?.label ?? dp.player.positions[0]
+}
 
 const STAGE_COLORS: Record<string, string> = {
   'League Phase': 'text-zinc-400',
@@ -220,16 +226,16 @@ function generateShareImage(p: ShareParams): string {
   ctx.beginPath(); ctx.moveTo(24, y); ctx.lineTo(W - 24, y); ctx.stroke(); y += 16
 
   // Players 2 cols
-  const posOrder = ['GK','CB','LB','RB','LWB','RWB','DM','CM','LM','RM','AM','LW','RW','ST','CF']
+  const posOrder = ['GK','CB','LB','RB','LWB','RWB','DM','CM','LM','RM','AM','LW','RW','ST','CF','SS']
   const sorted = [...p.players].sort((a, b) =>
-    posOrder.indexOf(a.player.positions[0]) - posOrder.indexOf(b.player.positions[0])
+    posOrder.indexOf(slotPos(a, p.formation)) - posOrder.indexOf(slotPos(b, p.formation))
   )
   const col1 = sorted.slice(0, half)
   const col2 = sorted.slice(half)
   const colW = (W - 48 - 12) / 2
 
   const drawPlayer = (dp: DraftedPlayer, x: number, py: number) => {
-    const pos = dp.player.positions[0]
+    const pos = slotPos(dp, p.formation)
     ctx.fillStyle = POS_CANVAS_BG[pos] ?? '#52525b'
     rrect(ctx, x, py + 2, 26, 16, 3); ctx.fill()
     ctx.fillStyle = '#ffffff'; ctx.font = 'bold 8px system-ui, -apple-system, sans-serif'
@@ -355,7 +361,7 @@ export function SeasonResults() {
 
   const sortedScorers = Object.entries(goalsByPlayer).sort((a, b) => b[1] - a[1])
   const goldenBoot: [string, number] | null = sortedScorers[0] ?? null
-  const gkPlayer = draftedPlayers.find(dp => dp.player.positions[0] === 'GK')
+  const gkPlayer = draftedPlayers.find(dp => slotPos(dp, formation) === 'GK')
   const goldenGlove: [string, number] | null = gkPlayer ? [gkPlayer.player.name, cleanSheetCount] : null
   const pots: [string, number] | null = goldenBoot
 
@@ -368,9 +374,9 @@ export function SeasonResults() {
 
   const perfectRun = won && totalW === 15 && totalD === 0 && totalL === 0
 
-  const posOrder = ['GK','CB','LB','RB','LWB','RWB','DM','CM','LM','RM','AM','LW','RW','ST','CF']
+  const posOrder = ['GK','CB','LB','RB','LWB','RWB','DM','CM','LM','RM','AM','LW','RW','ST','CF','SS']
   const orderedPlayers = [...draftedPlayers].sort((a, b) =>
-    posOrder.indexOf(a.player.positions[0]) - posOrder.indexOf(b.player.positions[0])
+    posOrder.indexOf(slotPos(a, formation)) - posOrder.indexOf(slotPos(b, formation))
   )
 
   const handleOpenShare = () => {
@@ -436,7 +442,7 @@ export function SeasonResults() {
         <div className="flex flex-wrap gap-x-4 gap-y-0.5 mb-6 text-xs text-zinc-400">
           {draftedPlayers.map(dp => (
             <span key={dp.player.id}>
-              <span className="text-zinc-600">{dp.player.positions[0]} </span>
+              <span className="text-zinc-600">{slotPos(dp, formation)} </span>
               <span className="text-zinc-300">{dp.player.name}</span>
               {showRatings && <span className={`ml-1 ${dp.rating >= 95 ? 'text-purple-400' : dp.rating >= 90 ? 'text-sky-300' : dp.rating >= 85 ? 'text-emerald-400' : dp.rating >= 80 ? 'text-yellow-400' : dp.rating >= 75 ? 'text-slate-400' : 'text-amber-600'}`}>{dp.rating}</span>}
             </span>
@@ -577,11 +583,12 @@ export function SeasonResults() {
           </div>
           {[...orderedPlayers].sort((a, b) => (goalsByPlayer[b.player.name] ?? 0) - (goalsByPlayer[a.player.name] ?? 0)).map(dp => {
             const goals = goalsByPlayer[dp.player.name] ?? 0
-            const isDef = DEFENDER_POSITIONS.has(dp.player.positions[0])
+            const pos = slotPos(dp, formation)
+            const isDef = DEFENDER_POSITIONS.has(pos)
             return (
               <div key={dp.player.id} className="flex items-center gap-2 px-2 py-1.5 border-b border-zinc-900/60 last:border-0">
-                <span className={`text-[9px] font-bold px-1 py-0.5 rounded text-white w-7 text-center ${POS_COLORS[dp.player.positions[0]] ?? 'bg-zinc-700'}`}>
-                  {dp.player.positions[0]}
+                <span className={`text-[9px] font-bold px-1 py-0.5 rounded text-white w-7 text-center ${POS_COLORS[pos] ?? 'bg-zinc-700'}`}>
+                  {pos}
                 </span>
                 <span className="flex-1 text-xs text-zinc-200">{dp.player.name}</span>
                 <span className={`w-6 text-center text-xs font-bold ${goals > 0 ? 'text-green-400' : 'text-zinc-700'}`}>

@@ -5,6 +5,13 @@ import { computeOverall } from '../../utils/ratings'
 import { computeOdds } from '../../utils/odds'
 import { simulateSeason } from '../../utils/simulation'
 import { motion } from 'framer-motion'
+import { FORMATIONS } from '../../data/formations'
+import type { DraftedPlayer } from '../../store/gameStore'
+
+function slotPos(dp: DraftedPlayer, formationName: string): string {
+  const slot = FORMATIONS[formationName]?.slots.find(s => s.id === dp.slotId)
+  return slot?.label ?? dp.player.positions[0]
+}
 
 const POSITION_COLORS: Record<string, string> = {
   GK: 'bg-amber-500', CB: 'bg-blue-600', LB: 'bg-blue-600', RB: 'bg-blue-600', LWB: 'bg-blue-600', RWB: 'bg-blue-600',
@@ -25,8 +32,8 @@ export function SquadSummary() {
   }
 
   const orderedPlayers = [...draftedPlayers].sort((a, b) => {
-    const order = ['GK', 'CB', 'LB', 'RB', 'LWB', 'RWB', 'DM', 'CM', 'LM', 'RM', 'AM', 'LW', 'RW', 'ST', 'CF']
-    return order.indexOf(a.player.positions[0]) - order.indexOf(b.player.positions[0])
+    const order = ['GK', 'CB', 'LB', 'RB', 'LWB', 'RWB', 'DM', 'CM', 'LM', 'RM', 'AM', 'LW', 'RW', 'ST', 'CF', 'SS']
+    return order.indexOf(slotPos(a, formation)) - order.indexOf(slotPos(b, formation))
   })
 
   return (
@@ -70,8 +77,8 @@ export function SquadSummary() {
               transition={{ delay: i * 0.04 }}
               className="flex items-center gap-2 px-3 py-2 bg-zinc-900 rounded border border-zinc-800"
             >
-              <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${POSITION_COLORS[dp.player.positions[0]] ?? 'bg-zinc-600'} text-white w-8 text-center`}>
-                {dp.player.positions[0]}
+              <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${POSITION_COLORS[slotPos(dp, formation)] ?? 'bg-zinc-600'} text-white w-8 text-center`}>
+                {slotPos(dp, formation)}
               </span>
               <span className="flex-1 text-white text-sm font-medium">{dp.player.name}</span>
               <span className="text-zinc-500 text-xs">{dp.club} {dp.season.split('-')[0]}/{dp.season.split('-')[1].slice(-2)}</span>
