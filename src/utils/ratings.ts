@@ -31,6 +31,26 @@ export function computeOverall(draftedPlayers: DraftedPlayer[]): {
   return { overall, attack, midfield, defence, gk }
 }
 
+// Tailwind text colour class by rating tier
+export function ratingColor(r: number): string {
+  if (r >= 95) return 'text-slate-200'   // Platinum
+  if (r >= 90) return 'text-yellow-400'  // Gold
+  if (r >= 85) return 'text-green-400'   // Green
+  if (r >= 80) return 'text-amber-400'   // Amber
+  if (r >= 75) return 'text-zinc-400'    // Grey
+  return 'text-red-500'                  // Red
+}
+
+// Hex colour for canvas rendering
+export function ratingColorHex(r: number): string {
+  if (r >= 95) return '#e2e8f0'  // Platinum
+  if (r >= 90) return '#facc15'  // Gold
+  if (r >= 85) return '#4ade80'  // Green
+  if (r >= 80) return '#fbbf24'  // Amber
+  if (r >= 75) return '#a1a1aa'  // Grey
+  return '#ef4444'               // Red
+}
+
 export function positionFit(playerPositions: string[], slotAccepts: string[]): 'natural' | 'okay' | 'unnatural' {
   if (playerPositions.some(p => slotAccepts[0] === p)) return 'natural'
   if (playerPositions.some(p => slotAccepts.includes(p))) return 'okay'

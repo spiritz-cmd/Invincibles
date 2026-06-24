@@ -189,14 +189,24 @@ function generateShareImage(p: ShareParams): string {
   ctx.fillStyle = '#e4e4e7'; ctx.fillText(ovrLabel, W - 24 - ovrTW + 8, y + 15)
   y += 44
 
-  // Record
-  const record = `${p.totalW}-${p.totalD}-${p.totalL}`
-  ctx.font = 'bold 50px system-ui, -apple-system, sans-serif'
-  ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center'
-  ctx.fillText(record, W / 2, y + 48)
-  y += 58
-  ctx.fillStyle = '#71717a'; ctx.font = '10px system-ui, -apple-system, sans-serif'
-  ctx.fillText('WON  ·  DRAWN  ·  LOST', W / 2, y); y += 16
+  // Record — three aligned columns so each label sits directly under its number
+  const recordCols = [
+    { val: p.totalW, label: 'WON' },
+    { val: p.totalD, label: 'DRAWN' },
+    { val: p.totalL, label: 'LOST' },
+  ]
+  const colW3 = (W - 48) / 3
+  ctx.textAlign = 'center'
+  recordCols.forEach(({ val, label }, i) => {
+    const cx = 24 + colW3 * i + colW3 / 2
+    ctx.font = 'bold 50px system-ui, -apple-system, sans-serif'
+    ctx.fillStyle = '#ffffff'
+    ctx.fillText(String(val), cx, y + 50)
+    ctx.font = '10px system-ui, -apple-system, sans-serif'
+    ctx.fillStyle = '#71717a'
+    ctx.fillText(label, cx, y + 66)
+  })
+  y += 78
   ctx.fillStyle = '#d4d4d8'; ctx.font = 'bold 12px system-ui, -apple-system, sans-serif'
   ctx.fillText(`${p.totalPts} pts  ·  Finished ${ordinal(p.position)}`, W / 2, y); y += 24
   ctx.textAlign = 'left'
@@ -228,7 +238,7 @@ function generateShareImage(p: ShareParams): string {
     ctx.fillText(name, x + 30, py + 13)
     if (p.showRatings) {
       const r = dp.rating
-      ctx.fillStyle = r >= 90 ? '#facc15' : r >= 85 ? '#4ade80' : '#a1a1aa'
+      ctx.fillStyle = r >= 95 ? '#e2e8f0' : r >= 90 ? '#facc15' : r >= 85 ? '#4ade80' : r >= 80 ? '#fbbf24' : r >= 75 ? '#a1a1aa' : '#ef4444'
       ctx.font = 'bold 11px system-ui, -apple-system, sans-serif'
       ctx.textAlign = 'right'; ctx.fillText(String(r), x + colW, py + 13); ctx.textAlign = 'left'
     }
@@ -399,7 +409,7 @@ export function SeasonResults() {
             <span key={dp.player.id}>
               <span className="text-zinc-600">{dp.player.positions[0]} </span>
               <span className="text-zinc-300">{dp.player.name}</span>
-              {showRatings && <span className="text-green-500 ml-1">{dp.rating}</span>}
+              {showRatings && <span className={`ml-1 ${dp.rating >= 95 ? 'text-slate-200' : dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : dp.rating >= 80 ? 'text-amber-400' : dp.rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>{dp.rating}</span>}
             </span>
           ))}
         </div>

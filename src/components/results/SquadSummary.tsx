@@ -76,7 +76,7 @@ export function SquadSummary() {
               <span className="flex-1 text-white text-sm font-medium">{dp.player.name}</span>
               <span className="text-zinc-500 text-xs">{dp.club} {dp.season.split('-')[0]}/{dp.season.split('-')[1].slice(-2)}</span>
               {showRatings && (
-                <span className={`text-sm font-bold w-7 text-right ${dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : 'text-zinc-300'}`}>
+                <span className={`text-sm font-bold w-7 text-right ${dp.rating >= 95 ? 'text-slate-200' : dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : dp.rating >= 80 ? 'text-amber-400' : dp.rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>
                   {dp.rating}
                 </span>
               )}
