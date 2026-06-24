@@ -1,0 +1,605 @@
+export type CLTeam = {
+  name: string
+  strength: number // 60-99, used for simulation
+  country: string
+}
+
+// 2025/26 UCL League Phase - 35 real teams (Tottenham omitted: that slot is the user's drafted team)
+export const CL_TEAMS_2526: CLTeam[] = [
+  { name: 'Paris Saint-Germain', strength: 90, country: 'France' },
+  { name: 'Real Madrid', strength: 95, country: 'Spain' },
+  { name: 'Manchester City', strength: 92, country: 'England' },
+  { name: 'Bayern Munich', strength: 91, country: 'Germany' },
+  { name: 'Liverpool', strength: 89, country: 'England' },
+  { name: 'Barcelona', strength: 90, country: 'Spain' },
+  { name: 'Arsenal', strength: 88, country: 'England' },
+  { name: 'Inter Milan', strength: 86, country: 'Italy' },
+  { name: 'Atletico Madrid', strength: 85, country: 'Spain' },
+  { name: 'Chelsea', strength: 85, country: 'England' },
+  { name: 'Bayer Leverkusen', strength: 82, country: 'Germany' },
+  { name: 'Borussia Dortmund', strength: 83, country: 'Germany' },
+  { name: 'Juventus', strength: 82, country: 'Italy' },
+  { name: 'Napoli', strength: 82, country: 'Italy' },
+  { name: 'Atalanta', strength: 81, country: 'Italy' },
+  { name: 'Newcastle United', strength: 81, country: 'England' },
+  { name: 'Benfica', strength: 80, country: 'Portugal' },
+  { name: 'Sporting CP', strength: 79, country: 'Portugal' },
+  { name: 'Villarreal', strength: 79, country: 'Spain' },
+  { name: 'Eintracht Frankfurt', strength: 79, country: 'Germany' },
+  { name: 'Marseille', strength: 79, country: 'France' },
+  { name: 'Athletic Club', strength: 78, country: 'Spain' },
+  { name: 'Monaco', strength: 78, country: 'France' },
+  { name: 'PSV Eindhoven', strength: 77, country: 'Netherlands' },
+  { name: 'Ajax', strength: 77, country: 'Netherlands' },
+  { name: 'Galatasaray', strength: 77, country: 'Turkey' },
+  { name: 'Club Brugge', strength: 74, country: 'Belgium' },
+  { name: 'Olympiacos', strength: 72, country: 'Greece' },
+  { name: 'Union Saint-Gilloise', strength: 72, country: 'Belgium' },
+  { name: 'Copenhagen', strength: 71, country: 'Denmark' },
+  { name: 'Slavia Prague', strength: 70, country: 'Czechia' },
+  { name: 'Bodø/Glimt', strength: 69, country: 'Norway' },
+  { name: 'Qarabağ', strength: 66, country: 'Azerbaijan' },
+  { name: 'Pafos', strength: 63, country: 'Cyprus' },
+  { name: 'Kairat Almaty', strength: 62, country: 'Kazakhstan' },
+]
+
+// All historical CL club+season pairs for the spinner
+export const CL_CLUB_SEASONS: { club: string; season: string }[] = [
+  // Ajax dynasty
+  { club: 'Ajax', season: '1994-95' }, { club: 'Ajax', season: '1995-96' },
+  { club: 'Ajax', season: '1996-97' }, { club: 'Ajax', season: '1997-98' },
+  { club: 'Ajax', season: '1998-99' }, { club: 'Ajax', season: '1999-00' },
+  { club: 'Ajax', season: '2001-02' }, { club: 'Ajax', season: '2002-03' },
+  { club: 'Ajax', season: '2005-06' }, { club: 'Ajax', season: '2010-11' },
+  { club: 'Ajax', season: '2011-12' }, { club: 'Ajax', season: '2012-13' },
+  { club: 'Ajax', season: '2014-15' },
+  { club: 'Ajax', season: '2018-19' }, { club: 'Ajax', season: '2019-20' },
+  { club: 'Ajax', season: '2020-21' },
+  // Lyon dynasty
+  { club: 'Lyon', season: '2005-06' }, { club: 'Lyon', season: '2006-07' },
+  { club: 'Lyon', season: '2007-08' }, { club: 'Lyon', season: '2008-09' },
+  { club: 'Lyon', season: '2009-10' }, { club: 'Lyon', season: '2010-11' },
+  // Benfica additions
+  { club: 'Benfica', season: '2005-06' }, { club: 'Benfica', season: '2011-12' },
+  { club: 'Benfica', season: '2012-13' },
+  { club: 'Benfica', season: '2013-14' }, { club: 'Benfica', season: '2014-15' },
+  { club: 'Benfica', season: '2021-22' }, { club: 'Benfica', season: '2022-23' },
+  { club: 'Benfica', season: '2023-24' },
+  // Shakhtar Donetsk
+  { club: 'Shakhtar Donetsk', season: '2007-08' }, { club: 'Shakhtar Donetsk', season: '2008-09' },
+  { club: 'Shakhtar Donetsk', season: '2009-10' }, { club: 'Shakhtar Donetsk', season: '2010-11' },
+  { club: 'Shakhtar Donetsk', season: '2011-12' }, { club: 'Shakhtar Donetsk', season: '2012-13' },
+  { club: 'Shakhtar Donetsk', season: '2014-15' },
+  // Galatasaray additions
+  { club: 'Galatasaray', season: '1999-00' },
+  { club: 'Galatasaray', season: '2000-01' }, { club: 'Galatasaray', season: '2006-07' },
+  { club: 'Galatasaray', season: '2012-13' }, { club: 'Galatasaray', season: '2013-14' },
+  // Valencia additions
+  { club: 'Valencia', season: '2001-02' },
+  { club: 'Valencia', season: '2006-07' },
+  { club: 'Valencia', season: '2010-11' }, { club: 'Valencia', season: '2011-12' },
+  { club: 'Valencia', season: '2015-16' }, { club: 'Valencia', season: '2018-19' },
+  // PSV Eindhoven additions
+  { club: 'PSV Eindhoven', season: '2004-05' }, { club: 'PSV Eindhoven', season: '2005-06' },
+  { club: 'PSV Eindhoven', season: '2015-16' }, { club: 'PSV Eindhoven', season: '2016-17' },
+  { club: 'PSV Eindhoven', season: '2023-24' },
+  // RB Leipzig additions
+  { club: 'RB Leipzig', season: '2017-18' },
+  { club: 'RB Leipzig', season: '2020-21' }, { club: 'RB Leipzig', season: '2021-22' },
+  { club: 'RB Leipzig', season: '2022-23' }, { club: 'RB Leipzig', season: '2023-24' },
+  // Lazio additions
+  { club: 'Lazio', season: '1998-99' }, { club: 'Lazio', season: '1999-00' },
+  { club: 'Lazio', season: '2000-01' },
+  // Deportivo de La Coruña
+  { club: 'Deportivo de La Coruña', season: '2000-01' }, { club: 'Deportivo de La Coruña', season: '2001-02' },
+  { club: 'Deportivo de La Coruña', season: '2002-03' }, { club: 'Deportivo de La Coruña', season: '2003-04' },
+  // Celtic additions
+  { club: 'Celtic', season: '2006-07' }, { club: 'Celtic', season: '2012-13' },
+  { club: 'Celtic', season: '2013-14' }, { club: 'Celtic', season: '2022-23' },
+  // Schalke additions
+  { club: 'Schalke', season: '2007-08' }, { club: 'Schalke', season: '2011-12' },
+  { club: 'Schalke', season: '2012-13' },
+  // Roma additions
+  { club: 'Roma', season: '2006-07' }, { club: 'Roma', season: '2007-08' },
+  { club: 'Roma', season: '2010-11' }, { club: 'Roma', season: '2014-15' },
+  // Sevilla additions
+  { club: 'Sevilla', season: '2007-08' }, { club: 'Sevilla', season: '2009-10' },
+  // BATCH 30 – Sevilla finish + Sporting CP
+  { club: 'Sevilla', season: '2017-18' }, { club: 'Sevilla', season: '2022-23' },
+  { club: 'Sporting CP', season: '2021-22' },
+  { club: 'Sporting CP', season: '2022-23' }, { club: 'Sporting CP', season: '2023-24' },
+  // BATCH 31 – Monaco + Bayer Leverkusen + Villarreal additions
+  { club: 'Monaco', season: '1997-98' }, { club: 'Monaco', season: '2004-05' },
+  { club: 'Bayer Leverkusen', season: '2011-12' },
+  { club: 'Villarreal', season: '2021-22' },
+  // BATCH 32 – Olympiacos + Atalanta + Club Brugge + Feyenoord
+  { club: 'Olympiacos', season: '2019-20' },
+  { club: 'Atalanta', season: '2019-20' },
+  { club: 'Club Brugge', season: '2021-22' }, { club: 'Club Brugge', season: '2022-23' },
+  { club: 'Feyenoord', season: '2023-24' },
+  // BATCH 33 – Frankfurt + Newcastle + Marseille + Galatasaray recent
+  { club: 'Eintracht Frankfurt', season: '2022-23' },
+  { club: 'Newcastle United', season: '2023-24' },
+  { club: 'Marseille', season: '2020-21' },
+  { club: 'Galatasaray', season: '2018-19' }, { club: 'Galatasaray', season: '2019-20' },
+  { club: 'Galatasaray', season: '2023-24' },
+  // Man United treble era
+  { club: 'Manchester United', season: '1993-94' }, { club: 'Manchester United', season: '1996-97' },
+  { club: 'Manchester United', season: '1997-98' }, { club: 'Manchester United', season: '1998-99' },
+  { club: 'Manchester United', season: '1999-00' }, { club: 'Manchester United', season: '2000-01' },
+  { club: 'Manchester United', season: '2002-03' }, { club: 'Manchester United', season: '2006-07' },
+  { club: 'Manchester United', season: '2007-08' }, { club: 'Manchester United', season: '2008-09' },
+  { club: 'Manchester United', season: '2010-11' }, { club: 'Manchester United', season: '2012-13' },
+  // Real Madrid
+  { club: 'Real Madrid', season: '1997-98' }, { club: 'Real Madrid', season: '1999-00' },
+  { club: 'Real Madrid', season: '2000-01' }, { club: 'Real Madrid', season: '2001-02' },
+  { club: 'Real Madrid', season: '2002-03' }, { club: 'Real Madrid', season: '2003-04' },
+  { club: 'Real Madrid', season: '2004-05' }, { club: 'Real Madrid', season: '2005-06' },
+  { club: 'Real Madrid', season: '2009-10' }, { club: 'Real Madrid', season: '2010-11' },
+  { club: 'Real Madrid', season: '2011-12' }, { club: 'Real Madrid', season: '2012-13' },
+  { club: 'Real Madrid', season: '2013-14' }, { club: 'Real Madrid', season: '2014-15' },
+  { club: 'Real Madrid', season: '2015-16' }, { club: 'Real Madrid', season: '2016-17' },
+  { club: 'Real Madrid', season: '2017-18' }, { club: 'Real Madrid', season: '2019-20' },
+  { club: 'Real Madrid', season: '2021-22' }, { club: 'Real Madrid', season: '2022-23' },
+  { club: 'Real Madrid', season: '2023-24' }, { club: 'Real Madrid', season: '2024-25' },
+  { club: 'Real Madrid', season: '2025-26' },
+  // AC Milan
+  { club: 'AC Milan', season: '1993-94' }, { club: 'AC Milan', season: '1994-95' },
+  { club: 'AC Milan', season: '2002-03' }, { club: 'AC Milan', season: '2004-05' },
+  { club: 'AC Milan', season: '2006-07' }, { club: 'AC Milan', season: '2009-10' },
+  { club: 'AC Milan', season: '2020-21' }, { club: 'AC Milan', season: '2021-22' },
+  { club: 'AC Milan', season: '2022-23' }, { club: 'AC Milan', season: '2023-24' },
+  // Barcelona
+  { club: 'Barcelona', season: '1993-94' }, { club: 'Barcelona', season: '1996-97' },
+  { club: 'Barcelona', season: '1997-98' }, { club: 'Barcelona', season: '1999-00' },
+  { club: 'Barcelona', season: '2005-06' }, { club: 'Barcelona', season: '2008-09' },
+  { club: 'Barcelona', season: '2009-10' }, { club: 'Barcelona', season: '2010-11' },
+  { club: 'Barcelona', season: '2012-13' }, { club: 'Barcelona', season: '2014-15' },
+  { club: 'Barcelona', season: '2015-16' }, { club: 'Barcelona', season: '2018-19' },
+  { club: 'Barcelona', season: '2019-20' }, { club: 'Barcelona', season: '2021-22' },
+  { club: 'Barcelona', season: '2022-23' }, { club: 'Barcelona', season: '2023-24' },
+  { club: 'Barcelona', season: '2024-25' }, { club: 'Barcelona', season: '2025-26' },
+  // Chelsea
+  { club: 'Chelsea', season: '2003-04' }, { club: 'Chelsea', season: '2004-05' },
+  { club: 'Chelsea', season: '2007-08' }, { club: 'Chelsea', season: '2011-12' },
+  { club: 'Chelsea', season: '2012-13' }, { club: 'Chelsea', season: '2013-14' },
+  { club: 'Chelsea', season: '2019-20' }, { club: 'Chelsea', season: '2020-21' },
+  { club: 'Chelsea', season: '2021-22' },
+  // Liverpool
+  { club: 'Liverpool', season: '2004-05' }, { club: 'Liverpool', season: '2006-07' },
+  { club: 'Liverpool', season: '2007-08' }, { club: 'Liverpool', season: '2008-09' },
+  { club: 'Liverpool', season: '2017-18' }, { club: 'Liverpool', season: '2018-19' },
+  { club: 'Liverpool', season: '2019-20' }, { club: 'Liverpool', season: '2021-22' },
+  { club: 'Liverpool', season: '2022-23' },
+  // Bayern Munich
+  { club: 'Bayern Munich', season: '1999-00' }, { club: 'Bayern Munich', season: '2000-01' },
+  { club: 'Bayern Munich', season: '2001-02' }, { club: 'Bayern Munich', season: '2002-03' },
+  { club: 'Bayern Munich', season: '2004-05' }, { club: 'Bayern Munich', season: '2009-10' },
+  { club: 'Bayern Munich', season: '2011-12' }, { club: 'Bayern Munich', season: '2012-13' },
+  { club: 'Bayern Munich', season: '2013-14' }, { club: 'Bayern Munich', season: '2014-15' },
+  { club: 'Bayern Munich', season: '2015-16' }, { club: 'Bayern Munich', season: '2019-20' },
+  { club: 'Bayern Munich', season: '2020-21' }, { club: 'Bayern Munich', season: '2023-24' },
+  { club: 'Bayern Munich', season: '2024-25' },
+  // Arsenal
+  { club: 'Arsenal', season: '1998-99' }, { club: 'Arsenal', season: '2001-02' },
+  { club: 'Arsenal', season: '2003-04' }, { club: 'Arsenal', season: '2005-06' },
+  { club: 'Arsenal', season: '2007-08' }, { club: 'Arsenal', season: '2010-11' },
+  { club: 'Arsenal', season: '2023-24' }, { club: 'Arsenal', season: '2024-25' },
+  { club: 'Arsenal', season: '2025-26' },
+  // Juventus
+  { club: 'Juventus', season: '1996-97' }, { club: 'Juventus', season: '1997-98' },
+  { club: 'Juventus', season: '1999-00' }, { club: 'Juventus', season: '2001-02' },
+  { club: 'Juventus', season: '2002-03' }, { club: 'Juventus', season: '2004-05' },
+  { club: 'Juventus', season: '2012-13' }, { club: 'Juventus', season: '2014-15' },
+  { club: 'Juventus', season: '2015-16' }, { club: 'Juventus', season: '2016-17' },
+  { club: 'Juventus', season: '2017-18' }, { club: 'Juventus', season: '2018-19' },
+  { club: 'Juventus', season: '2019-20' }, { club: 'Juventus', season: '2020-21' },
+  // Inter Milan
+  { club: 'Inter Milan', season: '2008-09' }, { club: 'Inter Milan', season: '2009-10' },
+  { club: 'Inter Milan', season: '2010-11' }, { club: 'Inter Milan', season: '2019-20' },
+  { club: 'Inter Milan', season: '2020-21' }, { club: 'Inter Milan', season: '2022-23' },
+  { club: 'Inter Milan', season: '2023-24' },
+  // Atletico Madrid
+  { club: 'Atletico Madrid', season: '2011-12' }, { club: 'Atletico Madrid', season: '2013-14' },
+  { club: 'Atletico Madrid', season: '2015-16' }, { club: 'Atletico Madrid', season: '2016-17' },
+  { club: 'Atletico Madrid', season: '2018-19' }, { club: 'Atletico Madrid', season: '2019-20' },
+  { club: 'Atletico Madrid', season: '2023-24' },
+  // Paris Saint-Germain
+  { club: 'Paris Saint-Germain', season: '2012-13' }, { club: 'Paris Saint-Germain', season: '2013-14' },
+  { club: 'Paris Saint-Germain', season: '2014-15' }, { club: 'Paris Saint-Germain', season: '2018-19' },
+  { club: 'Paris Saint-Germain', season: '2019-20' }, { club: 'Paris Saint-Germain', season: '2020-21' },
+  { club: 'Paris Saint-Germain', season: '2021-22' }, { club: 'Paris Saint-Germain', season: '2022-23' },
+  { club: 'Paris Saint-Germain', season: '2023-24' },
+  // Borussia Dortmund
+  { club: 'Borussia Dortmund', season: '1996-97' }, { club: 'Borussia Dortmund', season: '2011-12' },
+  { club: 'Borussia Dortmund', season: '2012-13' }, { club: 'Borussia Dortmund', season: '2013-14' },
+  { club: 'Borussia Dortmund', season: '2016-17' }, { club: 'Borussia Dortmund', season: '2018-19' },
+  { club: 'Borussia Dortmund', season: '2019-20' }, { club: 'Borussia Dortmund', season: '2020-21' },
+  { club: 'Borussia Dortmund', season: '2021-22' }, { club: 'Borussia Dortmund', season: '2022-23' },
+  { club: 'Borussia Dortmund', season: '2023-24' },
+  // Porto
+  { club: 'Porto', season: '1996-97' }, { club: 'Porto', season: '1997-98' },
+  { club: 'Porto', season: '1998-99' }, { club: 'Porto', season: '1999-00' },
+  { club: 'Porto', season: '2000-01' }, { club: 'Porto', season: '2001-02' },
+  { club: 'Porto', season: '2003-04' }, { club: 'Porto', season: '2004-05' },
+  { club: 'Porto', season: '2005-06' }, { club: 'Porto', season: '2006-07' },
+  { club: 'Porto', season: '2007-08' }, { club: 'Porto', season: '2008-09' },
+  { club: 'Porto', season: '2010-11' }, { club: 'Porto', season: '2011-12' },
+  { club: 'Porto', season: '2012-13' }, { club: 'Porto', season: '2016-17' },
+  { club: 'Porto', season: '2019-20' }, { club: 'Porto', season: '2020-21' },
+  { club: 'Porto', season: '2021-22' },
+  // Valencia
+  { club: 'Valencia', season: '1999-00' }, { club: 'Valencia', season: '2000-01' },
+  { club: 'Valencia', season: '2002-03' },
+  // Bayer Leverkusen
+  { club: 'Bayer Leverkusen', season: '2001-02' }, { club: 'Bayer Leverkusen', season: '2024-25' },
+  // Marseille
+  { club: 'Marseille', season: '1992-93' },
+  // Villarreal
+  { club: 'Villarreal', season: '2005-06' },
+  // Monaco
+  { club: 'Monaco', season: '2003-04' }, { club: 'Monaco', season: '2016-17' },
+  // PSV Eindhoven
+  { club: 'PSV Eindhoven', season: '1994-95' },
+  // Celtic
+  { club: 'Celtic', season: '2002-03' },
+  // Schalke
+  { club: 'Schalke', season: '2010-11' },
+  // Napoli
+  { club: 'Napoli', season: '2012-13' }, { club: 'Napoli', season: '2017-18' },
+  { club: 'Napoli', season: '2018-19' }, { club: 'Napoli', season: '2022-23' },
+  { club: 'Napoli', season: '2023-24' },
+  // Roma
+  { club: 'Roma', season: '2017-18' },
+  // Tottenham
+  { club: 'Tottenham', season: '2010-11' }, { club: 'Tottenham', season: '2018-19' },
+  { club: 'Tottenham', season: '2019-20' },
+  // Leicester City
+  { club: 'Leicester City', season: '2016-17' },
+  // RB Leipzig
+  { club: 'RB Leipzig', season: '2019-20' },
+  // Parma
+  { club: 'Parma', season: '1999-00' },
+  // Brentford entry removed — Brentford never qualified for UCL
+  // Manchester City
+  { club: 'Manchester City', season: '2011-12' }, { club: 'Manchester City', season: '2015-16' },
+  { club: 'Manchester City', season: '2016-17' }, { club: 'Manchester City', season: '2017-18' },
+  { club: 'Manchester City', season: '2019-20' }, { club: 'Manchester City', season: '2020-21' },
+  { club: 'Manchester City', season: '2021-22' }, { club: 'Manchester City', season: '2022-23' },
+  { club: 'Manchester City', season: '2023-24' }, { club: 'Manchester City', season: '2024-25' },
+  // ── 2025-26 UCL league phase (every participating club; Real Madrid, Barcelona,
+  //    Arsenal declared above). Tottenham omitted — that slot is the user's team. ──
+  { club: 'Paris Saint-Germain', season: '2025-26' }, { club: 'Manchester City', season: '2025-26' },
+  { club: 'Bayern Munich', season: '2025-26' }, { club: 'Liverpool', season: '2025-26' },
+  { club: 'Inter Milan', season: '2025-26' }, { club: 'Atletico Madrid', season: '2025-26' },
+  { club: 'Chelsea', season: '2025-26' }, { club: 'Bayer Leverkusen', season: '2025-26' },
+  { club: 'Borussia Dortmund', season: '2025-26' }, { club: 'Juventus', season: '2025-26' },
+  { club: 'Napoli', season: '2025-26' }, { club: 'Atalanta', season: '2025-26' },
+  { club: 'Newcastle United', season: '2025-26' }, { club: 'Benfica', season: '2025-26' },
+  { club: 'Sporting CP', season: '2025-26' }, { club: 'Villarreal', season: '2025-26' },
+  { club: 'Eintracht Frankfurt', season: '2025-26' }, { club: 'Marseille', season: '2025-26' },
+  { club: 'Athletic Club', season: '2025-26' }, { club: 'Monaco', season: '2025-26' },
+  { club: 'PSV Eindhoven', season: '2025-26' }, { club: 'Ajax', season: '2025-26' },
+  { club: 'Galatasaray', season: '2025-26' }, { club: 'Club Brugge', season: '2025-26' },
+  { club: 'Olympiacos', season: '2025-26' }, { club: 'Union Saint-Gilloise', season: '2025-26' },
+  { club: 'Copenhagen', season: '2025-26' }, { club: 'Slavia Prague', season: '2025-26' },
+  { club: 'Bodø/Glimt', season: '2025-26' }, { club: 'Qarabağ', season: '2025-26' },
+  { club: 'Pafos', season: '2025-26' }, { club: 'Kairat Almaty', season: '2025-26' },
+  // ── Historical expansion: 1992-93 group stage (Marseille 92-93, AC Milan 93-94,
+  //    Barcelona 93-94 already declared above) ──
+  { club: 'AC Milan', season: '1992-93' }, { club: 'Porto', season: '1992-93' },
+  { club: 'PSV Eindhoven', season: '1992-93' }, { club: 'IFK Göteborg', season: '1992-93' },
+  { club: 'Rangers', season: '1992-93' }, { club: 'Club Brugge', season: '1992-93' },
+  { club: 'CSKA Moscow', season: '1992-93' },
+  // ── 1993-94 group stage ──
+  { club: 'Porto', season: '1993-94' }, { club: 'Monaco', season: '1993-94' },
+  { club: 'Werder Bremen', season: '1993-94' }, { club: 'Anderlecht', season: '1993-94' },
+  { club: 'Spartak Moscow', season: '1993-94' }, { club: 'Galatasaray', season: '1993-94' },
+  // ── 1994-95 group stage (Ajax 94-95 & AC Milan 94-95 already declared) ──
+  { club: 'Barcelona', season: '1994-95' }, { club: 'Manchester United', season: '1994-95' },
+  { club: 'Bayern Munich', season: '1994-95' }, { club: 'Paris Saint-Germain', season: '1994-95' },
+  { club: 'Galatasaray', season: '1994-95' }, { club: 'IFK Göteborg', season: '1994-95' },
+  { club: 'Spartak Moscow', season: '1994-95' }, { club: 'Anderlecht', season: '1994-95' },
+  { club: 'Benfica', season: '1994-95' }, { club: 'Casino Salzburg', season: '1994-95' },
+  { club: 'AEK Athens', season: '1994-95' }, { club: 'Dynamo Kyiv', season: '1994-95' },
+  { club: 'Hajduk Split', season: '1994-95' }, { club: 'Steaua București', season: '1994-95' },
+  // ── 1995-96 group stage (Ajax 95-96 already declared) ──
+  { club: 'Real Madrid', season: '1995-96' }, { club: 'Juventus', season: '1995-96' },
+  { club: 'Borussia Dortmund', season: '1995-96' }, { club: 'Porto', season: '1995-96' },
+  { club: 'Rangers', season: '1995-96' }, { club: 'Spartak Moscow', season: '1995-96' },
+  { club: 'Steaua București', season: '1995-96' }, { club: 'Grasshopper', season: '1995-96' },
+  { club: 'Ferencváros', season: '1995-96' }, { club: 'Blackburn Rovers', season: '1995-96' },
+  { club: 'Legia Warsaw', season: '1995-96' }, { club: 'Rosenborg', season: '1995-96' },
+  { club: 'Nantes', season: '1995-96' }, { club: 'Panathinaikos', season: '1995-96' },
+  { club: 'Aalborg', season: '1995-96' },
+  // ── Red Bull Salzburg ──
+  { club: 'Red Bull Salzburg', season: '2019-20' }, { club: 'Red Bull Salzburg', season: '2020-21' },
+  { club: 'Red Bull Salzburg', season: '2021-22' }, { club: 'Red Bull Salzburg', season: '2022-23' },
+  { club: 'Red Bull Salzburg', season: '2023-24' }, { club: 'Red Bull Salzburg', season: '2024-25' },
+  // ── Fenerbahce ──
+  { club: 'Fenerbahce', season: '1996-97' }, { club: 'Fenerbahce', season: '1997-98' },
+  { club: 'Fenerbahce', season: '2004-05' }, { club: 'Fenerbahce', season: '2007-08' },
+  { club: 'Fenerbahce', season: '2008-09' },
+  // ── Fiorentina ──
+  { club: 'Fiorentina', season: '1998-99' }, { club: 'Fiorentina', season: '1999-00' },
+  { club: 'Fiorentina', season: '2009-10' },
+  // ── Bayer Leverkusen gaps ──
+  { club: 'Bayer Leverkusen', season: '2000-01' }, { club: 'Bayer Leverkusen', season: '2013-14' },
+  { club: 'Bayer Leverkusen', season: '2016-17' },
+  // ── Villarreal gaps ──
+  { club: 'Villarreal', season: '2007-08' }, { club: 'Villarreal', season: '2008-09' },
+  // ── Aston Villa ──
+  { club: 'Aston Villa', season: '2024-25' },
+  // ── Olympiacos gaps ──
+  { club: 'Olympiacos', season: '2007-08' }, { club: 'Olympiacos', season: '2010-11' },
+  { club: 'Olympiacos', season: '2011-12' }, { club: 'Olympiacos', season: '2012-13' },
+  { club: 'Olympiacos', season: '2013-14' },
+  // ── Sporting CP gaps ──
+  { club: 'Sporting CP', season: '2007-08' }, { club: 'Sporting CP', season: '2008-09' },
+  { club: 'Sporting CP', season: '2016-17' },
+  // ── Dynamo Kyiv gaps ──
+  { club: 'Dynamo Kyiv', season: '1998-99' }, { club: 'Dynamo Kyiv', season: '1999-00' },
+  { club: 'Dynamo Kyiv', season: '2001-02' }, { club: 'Dynamo Kyiv', season: '2006-07' },
+  { club: 'Dynamo Kyiv', season: '2015-16' }, { club: 'Dynamo Kyiv', season: '2020-21' },
+  // ── Benfica gaps ──
+  { club: 'Benfica', season: '2007-08' }, { club: 'Benfica', season: '2017-18' },
+  // ── Marseille gap ──
+  { club: 'Marseille', season: '2008-09' },
+  // ── Sporting CP gap ──
+  { club: 'Sporting CP', season: '2017-18' },
+  // ── Olympiacos gap ──
+  { club: 'Olympiacos', season: '2017-18' },
+  // ── Werder Bremen gaps ──
+  { club: 'Werder Bremen', season: '2004-05' }, { club: 'Werder Bremen', season: '2006-07' },
+  { club: 'Werder Bremen', season: '2008-09' },
+  // ── Monaco gap ──
+  { club: 'Monaco', season: '2018-19' },
+  // ── Atalanta gaps ──
+  { club: 'Atalanta', season: '2020-21' }, { club: 'Atalanta', season: '2024-25' },
+  // ── RB Leipzig gap ──
+  { club: 'RB Leipzig', season: '2024-25' },
+  // ── Schalke gap ──
+  { club: 'Schalke', season: '2018-19' },
+  // ── Leeds United ──
+  { club: 'Leeds United', season: '2000-01' },
+  // ── Bordeaux ──
+  { club: 'Bordeaux', season: '2009-10' },
+  // ── Newcastle United gaps ──
+  { club: 'Newcastle United', season: '1997-98' }, { club: 'Newcastle United', season: '2002-03' },
+  // ── Batch 39 ──
+  { club: 'Lyon', season: '2001-02' }, { club: 'Lyon', season: '2002-03' },
+  { club: 'Lyon', season: '2003-04' }, { club: 'Lyon', season: '2004-05' },
+  { club: 'Inter Milan', season: '2001-02' }, { club: 'Inter Milan', season: '2002-03' },
+  { club: 'Inter Milan', season: '2003-04' },
+  { club: 'Borussia Dortmund', season: '1997-98' },
+  { club: 'Juventus', season: '1998-99' },
+  { club: 'Manchester United', season: '2009-10' },
+  // ── Batch 40 ──
+  { club: 'Barcelona', season: '1998-99' }, { club: 'Barcelona', season: '2000-01' },
+  { club: 'Barcelona', season: '2001-02' }, { club: 'Barcelona', season: '2002-03' },
+  { club: 'Barcelona', season: '2003-04' },
+  { club: 'Real Madrid', season: '1996-97' },
+  { club: 'Atletico Madrid', season: '1996-97' },
+  { club: 'Paris Saint-Germain', season: '1997-98' }, { club: 'Paris Saint-Germain', season: '1999-00' },
+  { club: 'Paris Saint-Germain', season: '2000-01' },
+  // ── Batch 41 ──
+  { club: 'Lyon', season: '2016-17' }, { club: 'Lyon', season: '2018-19' },
+  { club: 'Lyon', season: '2019-20' },
+  { club: 'Inter Milan', season: '2004-05' }, { club: 'Inter Milan', season: '2007-08' },
+  { club: 'Galatasaray', season: '1997-98' }, { club: 'Galatasaray', season: '1998-99' },
+  { club: 'Galatasaray', season: '2002-03' }, { club: 'Galatasaray', season: '2003-04' },
+  { club: 'Manchester United', season: '2019-20' },
+  // ── Batch 42 ──
+  { club: 'Chelsea', season: '2005-06' }, { club: 'Chelsea', season: '2006-07' },
+  { club: 'Chelsea', season: '2008-09' },
+  { club: 'Real Madrid', season: '2006-07' }, { club: 'Real Madrid', season: '2007-08' },
+  { club: 'Real Madrid', season: '2008-09' },
+  { club: 'Arsenal', season: '2002-03' }, { club: 'Arsenal', season: '2004-05' },
+  { club: 'Arsenal', season: '2006-07' },
+  { club: 'Barcelona', season: '2006-07' },
+  // ── Batch 43 ──
+  { club: 'Chelsea', season: '2009-10' }, { club: 'Chelsea', season: '2010-11' },
+  { club: 'Bayern Munich', season: '2006-07' }, { club: 'Bayern Munich', season: '2007-08' },
+  { club: 'Bayern Munich', season: '2008-09' }, { club: 'Bayern Munich', season: '2010-11' },
+  { club: 'Barcelona', season: '2007-08' }, { club: 'Barcelona', season: '2011-12' },
+  { club: 'Arsenal', season: '2009-10' }, { club: 'Arsenal', season: '2011-12' },
+  // ── Batch 44 ──
+  { club: 'Chelsea', season: '2014-15' }, { club: 'Chelsea', season: '2015-16' },
+  { club: 'Chelsea', season: '2016-17' }, { club: 'Chelsea', season: '2024-25' },
+  { club: 'Manchester United', season: '2023-24' }, { club: 'Manchester United', season: '2024-25' },
+  { club: 'Schalke', season: '2013-14' }, { club: 'Schalke', season: '2014-15' },
+  { club: 'Galatasaray', season: '2014-15' },
+  { club: 'Atletico Madrid', season: '2014-15' },
+  // ── Batch 45 ──
+  { club: 'Bayern Munich', season: '2016-17' }, { club: 'Bayern Munich', season: '2017-18' },
+  { club: 'Bayern Munich', season: '2018-19' }, { club: 'Bayern Munich', season: '2021-22' },
+  { club: 'Bayern Munich', season: '2022-23' },
+  { club: 'Real Madrid', season: '2018-19' }, { club: 'Real Madrid', season: '2020-21' },
+  { club: 'Paris Saint-Germain', season: '2015-16' }, { club: 'Paris Saint-Germain', season: '2016-17' },
+  { club: 'Paris Saint-Germain', season: '2017-18' },
+  // ── Batch 46 ──
+  { club: 'Atletico Madrid', season: '2017-18' }, { club: 'Atletico Madrid', season: '2020-21' },
+  { club: 'Atletico Madrid', season: '2021-22' }, { club: 'Atletico Madrid', season: '2022-23' },
+  { club: 'Barcelona', season: '2013-14' }, { club: 'Barcelona', season: '2016-17' },
+  { club: 'Barcelona', season: '2017-18' }, { club: 'Barcelona', season: '2020-21' },
+  { club: 'Arsenal', season: '2016-17' },
+  { club: 'Marseille', season: '2010-11' },
+  // ── Batch 47 ──
+  { club: 'Shakhtar Donetsk', season: '2006-07' }, { club: 'Shakhtar Donetsk', season: '2015-16' },
+  { club: 'Shakhtar Donetsk', season: '2016-17' }, { club: 'Shakhtar Donetsk', season: '2017-18' },
+  { club: 'Shakhtar Donetsk', season: '2018-19' },
+  { club: 'Porto', season: '2013-14' }, { club: 'Porto', season: '2014-15' },
+  { club: 'Porto', season: '2015-16' }, { club: 'Porto', season: '2017-18' },
+  { club: 'Porto', season: '2018-19' },
+  // ── Batch 48 ──
+  { club: 'Shakhtar Donetsk', season: '2019-20' }, { club: 'Shakhtar Donetsk', season: '2020-21' },
+  { club: 'Shakhtar Donetsk', season: '2021-22' }, { club: 'Shakhtar Donetsk', season: '2022-23' },
+  { club: 'Shakhtar Donetsk', season: '2023-24' },
+  { club: 'Sevilla', season: '2015-16' }, { club: 'Sevilla', season: '2020-21' },
+  { club: 'Sevilla', season: '2021-22' }, { club: 'Sevilla', season: '2023-24' },
+  { club: 'Benfica', season: '2015-16' },
+  // ── Batch 49 ──
+  { club: 'Benfica', season: '2016-17' }, { club: 'Benfica', season: '2018-19' },
+  { club: 'Benfica', season: '2024-25' },
+  { club: 'Porto', season: '2022-23' }, { club: 'Porto', season: '2023-24' },
+  { club: 'Marseille', season: '2011-12' }, { club: 'Marseille', season: '2022-23' },
+  // ── Batch 50 ──
+  { club: 'Paris Saint-Germain', season: '2001-02' }, { club: 'Paris Saint-Germain', season: '2002-03' },
+  { club: 'Liverpool', season: '2001-02' },
+  { club: 'Inter Milan', season: '1998-99' }, { club: 'Inter Milan', season: '2000-01' },
+  { club: 'Lyon', season: '2000-01' },
+  { club: 'Marseille', season: '1999-00' }, { club: 'Marseille', season: '2009-10' },
+  { club: 'Atletico Madrid', season: '2008-09' }, { club: 'Atletico Madrid', season: '2009-10' },
+  // ── Batch 51 ──
+  { club: 'Rosenborg', season: '1996-97' }, { club: 'Rosenborg', season: '1997-98' },
+  { club: 'Rosenborg', season: '1999-00' }, { club: 'Rosenborg', season: '2000-01' },
+  { club: 'Rosenborg', season: '2001-02' }, { club: 'Rosenborg', season: '2002-03' },
+  { club: 'Rosenborg', season: '2004-05' }, { club: 'Rosenborg', season: '2007-08' },
+  { club: 'AC Milan', season: '2000-01' },
+  { club: 'Ajax', season: '2003-04' },
+  // ── Batch 52 ──
+  { club: 'Anderlecht', season: '1999-00' }, { club: 'Anderlecht', season: '2000-01' },
+  { club: 'Anderlecht', season: '2001-02' }, { club: 'Anderlecht', season: '2003-04' },
+  { club: 'Anderlecht', season: '2004-05' }, { club: 'Anderlecht', season: '2005-06' },
+  { club: 'Anderlecht', season: '2006-07' }, { club: 'Anderlecht', season: '2013-14' },
+  { club: 'Anderlecht', season: '2014-15' }, { club: 'Anderlecht', season: '2016-17' },
+  // ── Batch 53 ──
+  { club: 'Anderlecht', season: '2017-18' },
+  { club: 'Olympiacos', season: '1998-99' }, { club: 'Olympiacos', season: '2000-01' },
+  { club: 'Olympiacos', season: '2003-04' }, { club: 'Olympiacos', season: '2004-05' },
+  { club: 'Olympiacos', season: '2006-07' }, { club: 'Olympiacos', season: '2009-10' },
+  { club: 'Olympiacos', season: '2020-21' },
+  { club: 'Panathinaikos', season: '1999-00' }, { club: 'Panathinaikos', season: '2001-02' },
+  // ── Batch 54 ──
+  { club: 'Panathinaikos', season: '2004-05' }, { club: 'Panathinaikos', season: '2005-06' },
+  { club: 'Panathinaikos', season: '2008-09' }, { club: 'Panathinaikos', season: '2010-11' },
+  { club: 'CSKA Moscow', season: '2004-05' }, { club: 'CSKA Moscow', season: '2008-09' },
+  { club: 'CSKA Moscow', season: '2009-10' }, { club: 'CSKA Moscow', season: '2011-12' },
+  { club: 'CSKA Moscow', season: '2013-14' }, { club: 'CSKA Moscow', season: '2014-15' },
+  // ── Batch 55 ──
+  { club: 'CSKA Moscow', season: '2015-16' }, { club: 'CSKA Moscow', season: '2016-17' },
+  { club: 'CSKA Moscow', season: '2017-18' }, { club: 'CSKA Moscow', season: '2018-19' },
+  { club: 'Spartak Moscow', season: '1999-00' }, { club: 'Spartak Moscow', season: '2000-01' },
+  { club: 'Spartak Moscow', season: '2006-07' }, { club: 'Spartak Moscow', season: '2017-18' },
+  { club: 'Lokomotiv Moscow', season: '2002-03' }, { club: 'Lokomotiv Moscow', season: '2003-04' },
+  // ── Batch 56 ──
+  { club: 'Lokomotiv Moscow', season: '2018-19' }, { club: 'Lokomotiv Moscow', season: '2019-20' },
+  { club: 'Lokomotiv Moscow', season: '2020-21' },
+  { club: 'Zenit', season: '2011-12' }, { club: 'Zenit', season: '2013-14' },
+  { club: 'Zenit', season: '2014-15' }, { club: 'Zenit', season: '2015-16' },
+  { club: 'Zenit', season: '2019-20' }, { club: 'Zenit', season: '2020-21' },
+  { club: 'Zenit', season: '2021-22' },
+  // ── Batch 57 ──
+  { club: 'FC Basel', season: '2001-02' }, { club: 'FC Basel', season: '2002-03' },
+  { club: 'Basel', season: '2008-09' }, { club: 'Basel', season: '2011-12' },
+  { club: 'Basel', season: '2013-14' }, { club: 'Basel', season: '2014-15' },
+  { club: 'Basel', season: '2015-16' }, { club: 'Basel', season: '2016-17' },
+  { club: 'Basel', season: '2017-18' },
+  { club: 'Aalborg', season: '2008-09' },
+  // ── Batch 58 ──
+  { club: 'Club Brugge', season: '2005-06' }, { club: 'Club Brugge', season: '2016-17' },
+  { club: 'Club Brugge', season: '2018-19' }, { club: 'Club Brugge', season: '2019-20' },
+  { club: 'Club Brugge', season: '2020-21' }, { club: 'Club Brugge', season: '2023-24' },
+  { club: 'Club Brugge', season: '2024-25' },
+  { club: 'Dinamo Zagreb', season: '2011-12' }, { club: 'Dinamo Zagreb', season: '2012-13' },
+  { club: 'Dinamo Zagreb', season: '2016-17' },
+  // ── Batch 59 ──
+  { club: 'Celtic', season: '2001-02' }, { club: 'Celtic', season: '2003-04' },
+  { club: 'Rangers', season: '2003-04' }, { club: 'Rangers', season: '2005-06' },
+  { club: 'Rangers', season: '2010-11' }, { club: 'Rangers', season: '2022-23' },
+  { club: 'Dinamo Zagreb', season: '2019-20' }, { club: 'Dinamo Zagreb', season: '2022-23' },
+  { club: 'Dinamo Zagreb', season: '2024-25' },
+  { club: 'Nantes', season: '1996-97' },
+  // ── Batch 60 ──
+  { club: 'Feyenoord', season: '2001-02' }, { club: 'Feyenoord', season: '2017-18' },
+  { club: 'Feyenoord', season: '2024-25' },
+  { club: 'Copenhagen', season: '2022-23' }, { club: 'Copenhagen', season: '2023-24' },
+  { club: 'Villarreal', season: '2011-12' }, { club: 'Villarreal', season: '2015-16' },
+  { club: 'Shakhtar Donetsk', season: '2000-01' },
+  { club: 'Dynamo Kyiv', season: '2007-08' }, { club: 'Dynamo Kyiv', season: '2021-22' },
+  // ── Batch 61 ──
+  { club: 'Nantes', season: '2001-02' },
+  { club: 'AEK Athens', season: '2002-03' }, { club: 'AEK Athens', season: '2018-19' },
+  { club: 'Sporting CP', season: '2006-07' },
+  { club: 'Slavia Prague', season: '2007-08' }, { club: 'Slavia Prague', season: '2019-20' },
+  { club: 'Sparta Prague', season: '2001-02' }, { club: 'Sparta Prague', season: '2002-03' },
+  { club: 'Sparta Prague', season: '2003-04' },
+  // ── Batch 62 ──
+  { club: 'Steaua București', season: '1996-97' }, { club: 'Steaua București', season: '2006-07' }, { club: 'Steaua București', season: '2007-08' },
+  { club: 'Sparta Prague', season: '2004-05' }, { club: 'Sparta Prague', season: '2024-25' },
+  { club: 'Real Sociedad', season: '2013-14' }, { club: 'Real Sociedad', season: '2023-24' },
+  { club: 'Wolfsburg', season: '2009-10' }, { club: 'Wolfsburg', season: '2015-16' },
+  { club: 'BATE Borisov', season: '2012-13' },
+  // ── Batch 63 ──
+  { club: 'Wolfsburg', season: '2021-22' },
+  { club: 'Stuttgart', season: '2009-10' }, { club: 'Stuttgart', season: '2024-25' },
+  { club: 'Braga', season: '2012-13' }, { club: 'Braga', season: '2023-24' },
+  { club: 'Malaga', season: '2012-13' },
+  { club: 'Lille', season: '2012-13' }, { club: 'Lille', season: '2021-22' }, { club: 'Lille', season: '2024-25' },
+  { club: 'Red Star Belgrade', season: '2024-25' },
+  // ── Batch 64 ──
+  { club: 'Red Star Belgrade', season: '2018-19' }, { club: 'Red Star Belgrade', season: '2019-20' },
+  { club: 'Ludogorets', season: '2014-15' }, { club: 'Ludogorets', season: '2016-17' },
+  { club: 'Legia Warsaw', season: '2016-17' },
+  { club: 'Hoffenheim', season: '2018-19' },
+  { club: 'Rostov', season: '2016-17' },
+  { club: 'Young Boys', season: '2018-19' }, { club: 'Young Boys', season: '2021-22' }, { club: 'Young Boys', season: '2023-24' },
+  // ── Batch 65 ──
+  { club: 'Young Boys', season: '2024-25' },
+  { club: 'Malmö', season: '2014-15' }, { club: 'Malmö', season: '2021-22' },
+  { club: 'Maribor', season: '1999-00' }, { club: 'Maribor', season: '2014-15' }, { club: 'Maribor', season: '2017-18' },
+  { club: 'APOEL', season: '2009-10' }, { club: 'APOEL', season: '2011-12' }, { club: 'APOEL', season: '2014-15' }, { club: 'APOEL', season: '2016-17' },
+  // ── Batch 66 ──
+  { club: 'APOEL', season: '2017-18' },
+  { club: 'Istanbul Basaksehir', season: '2020-21' },
+  { club: 'Ferencváros', season: '2020-21' },
+  { club: 'Krasnodar', season: '2020-21' },
+  { club: 'Midtjylland', season: '2020-21' },
+  { club: 'Rennes', season: '2020-21' },
+  { club: 'Besiktas', season: '2003-04' }, { club: 'Besiktas', season: '2009-10' }, { club: 'Besiktas', season: '2017-18' }, { club: 'Besiktas', season: '2021-22' },
+  // ── Batch 67 ──
+  { club: 'CFR Cluj', season: '2008-09' }, { club: 'CFR Cluj', season: '2010-11' }, { club: 'CFR Cluj', season: '2012-13' },
+  { club: 'Viktoria Plzen', season: '2011-12' }, { club: 'Viktoria Plzen', season: '2013-14' }, { club: 'Viktoria Plzen', season: '2022-23' },
+  { club: 'Sheriff Tiraspol', season: '2021-22' },
+  { club: 'Genk', season: '2002-03' }, { club: 'Genk', season: '2019-20' },
+  { club: 'Nordsjaelland', season: '2012-13' },
+  // ── Batch 68 ──
+  { club: 'Maccabi Tel Aviv', season: '2004-05' }, { club: 'Maccabi Tel Aviv', season: '2015-16' },
+  { club: 'Maccabi Haifa', season: '2022-23' },
+  { club: 'Antwerp', season: '2023-24' },
+  { club: 'Union Berlin', season: '2023-24' },
+  { club: 'Lens', season: '2023-24' },
+  { club: 'Gent', season: '2015-16' },
+  { club: 'Rubin Kazan', season: '2009-10' },
+  { club: 'Auxerre', season: '1996-97' }, { club: 'Auxerre', season: '2002-03' },
+  // ── Batch 69 ──
+  { club: 'Parma', season: '1997-98' },
+  { club: 'Grasshopper', season: '1996-97' },
+  { club: 'Widzew Lodz', season: '1996-97' },
+  { club: 'HJK Helsinki', season: '1997-98' },
+  { club: 'Brondby', season: '1998-99' },
+  { club: 'Hertha Berlin', season: '1999-00' },
+  { club: 'Bor. Mönchengladbach', season: '1999-00' }, { club: 'Bor. Mönchengladbach', season: '2020-21' },
+  { club: 'Betis', season: '2005-06' },
+  { club: 'Udinese', season: '2005-06' },
+  // ── Batch 70 ──
+  { club: 'Levski Sofia', season: '2006-07' },
+  { club: 'Anorthosis', season: '2008-09' },
+  { club: 'Montpellier', season: '2012-13' },
+  { club: 'Sturm Graz', season: '1999-00' },
+  { club: 'Djurgarden', season: '2004-05' },
+  { club: 'FC Thun', season: '2005-06' },
+  { club: 'Artmedia', season: '2005-06' },
+  { club: 'Rapid Wien', season: '1996-97' }, { club: 'Rapid Wien', season: '2005-06' },
+  { club: 'Partizan', season: '2003-04' },
+  // ── Batch 71 ──
+  { club: 'Bursaspor', season: '2010-11' },
+  { club: 'Twente', season: '2010-11' },
+  { club: 'Debrecen', season: '2009-10' },
+  { club: 'Unirea Urziceni', season: '2009-10' },
+  { club: 'Qarabag', season: '2017-18' },
+  { club: 'Slovan Bratislava', season: '2024-25' },
+  { club: 'Stade Brestois', season: '2024-25' },
+  { club: 'Girona', season: '2024-25' },
+  { club: 'Bologna', season: '2024-25' },
+]
