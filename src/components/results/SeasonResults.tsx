@@ -238,7 +238,7 @@ function generateShareImage(p: ShareParams): string {
     ctx.fillText(name, x + 30, py + 13)
     if (p.showRatings) {
       const r = dp.rating
-      ctx.fillStyle = r >= 95 ? '#e2e8f0' : r >= 90 ? '#facc15' : r >= 85 ? '#4ade80' : r >= 80 ? '#fbbf24' : r >= 75 ? '#a1a1aa' : '#ef4444'
+      ctx.fillStyle = r >= 95 ? '#c084fc' : r >= 90 ? '#7dd3fc' : r >= 85 ? '#34d399' : r >= 80 ? '#facc15' : r >= 75 ? '#94a3b8' : '#d97706'
       ctx.font = 'bold 11px system-ui, -apple-system, sans-serif'
       ctx.textAlign = 'right'; ctx.fillText(String(r), x + colW, py + 13); ctx.textAlign = 'left'
     }
@@ -409,7 +409,7 @@ export function SeasonResults() {
             <span key={dp.player.id}>
               <span className="text-zinc-600">{dp.player.positions[0]} </span>
               <span className="text-zinc-300">{dp.player.name}</span>
-              {showRatings && <span className={`ml-1 ${dp.rating >= 95 ? 'text-slate-200' : dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : dp.rating >= 80 ? 'text-amber-400' : dp.rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>{dp.rating}</span>}
+              {showRatings && <span className={`ml-1 ${dp.rating >= 95 ? 'text-purple-400' : dp.rating >= 90 ? 'text-sky-300' : dp.rating >= 85 ? 'text-emerald-400' : dp.rating >= 80 ? 'text-yellow-400' : dp.rating >= 75 ? 'text-slate-400' : 'text-amber-600'}`}>{dp.rating}</span>}
             </span>
           ))}
         </div>

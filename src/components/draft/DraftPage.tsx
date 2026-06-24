@@ -285,7 +285,7 @@ export function DraftPage() {
                     <span className="flex-1 text-white">{dp.player.name}</span>
                     <span className="text-zinc-600 text-xs">{dp.club}</span>
                     {showRatings && (
-                      <span className={`font-bold text-xs w-7 text-right ${dp.rating >= 95 ? 'text-slate-200' : dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : dp.rating >= 80 ? 'text-amber-400' : dp.rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>
+                      <span className={`font-bold text-xs w-7 text-right ${dp.rating >= 95 ? 'text-purple-400' : dp.rating >= 90 ? 'text-sky-300' : dp.rating >= 85 ? 'text-emerald-400' : dp.rating >= 80 ? 'text-yellow-400' : dp.rating >= 75 ? 'text-slate-400' : 'text-amber-600'}`}>
                         {dp.rating}
                       </span>
                     )}

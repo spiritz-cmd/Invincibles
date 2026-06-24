@@ -196,7 +196,7 @@ export function PlayerList({ club, season, alreadyDraftedIds, emptySlots, onPick
             <span className="text-xs text-zinc-600">{actualSeason}</span>
             <span className="text-xs text-zinc-500">{player.nationality}</span>
             {showRatings && (
-              <span className={`text-sm font-bold w-8 text-right ${rating >= 95 ? 'text-slate-200' : rating >= 90 ? 'text-yellow-400' : rating >= 85 ? 'text-green-400' : rating >= 80 ? 'text-amber-400' : rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>
+              <span className={`text-sm font-bold w-8 text-right ${rating >= 95 ? 'text-purple-400' : rating >= 90 ? 'text-sky-300' : rating >= 85 ? 'text-emerald-400' : rating >= 80 ? 'text-yellow-400' : rating >= 75 ? 'text-slate-400' : 'text-amber-600'}`}>
                 {rating}
               </span>
             )}

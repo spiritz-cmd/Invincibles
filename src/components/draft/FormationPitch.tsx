@@ -112,7 +112,7 @@ export function FormationPitch({
                   {dp.player.name.split(' ').slice(-1)[0]}
                 </span>
                 {showRatings && (
-                  <span className={`text-[9px] font-bold ${dp.rating >= 95 ? 'text-slate-200' : dp.rating >= 90 ? 'text-yellow-400' : dp.rating >= 85 ? 'text-green-400' : dp.rating >= 80 ? 'text-amber-400' : dp.rating >= 75 ? 'text-zinc-400' : 'text-red-500'}`}>
+                  <span className={`text-[9px] font-bold ${dp.rating >= 95 ? 'text-purple-400' : dp.rating >= 90 ? 'text-sky-300' : dp.rating >= 85 ? 'text-emerald-400' : dp.rating >= 80 ? 'text-yellow-400' : dp.rating >= 75 ? 'text-slate-400' : 'text-amber-600'}`}>
                     {dp.rating}
                   </span>
                 )}
