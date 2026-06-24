@@ -164,7 +164,7 @@ function generateShareImage(p: ShareParams): string {
   const half = Math.ceil(p.players.length / 2)
   const playerRows = Math.max(half, p.players.length - half)
   const awardRows = ((p.goldenBoot || p.goldenGlove) ? 1 : 0) + 1
-  const H = 24 + 44 + 88 + 24 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
+  const H = 24 + 44 + 108 + 24 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
 
   const canvas = document.createElement('canvas')
   canvas.width = W * dpr; canvas.height = H * dpr
@@ -207,7 +207,7 @@ function generateShareImage(p: ShareParams): string {
     ctx.fillStyle = '#71717a'
     ctx.fillText(label, cx, y + 66)
   })
-  y += 88
+  y += 108
   const shortResult = p.finalPosition.replace(/ \(.*\)$/, '')
   ctx.fillStyle = '#d4d4d8'; ctx.font = 'bold 12px system-ui, -apple-system, sans-serif'
   let ptsLine = `${p.totalPts} pts  ·  Finished ${ordinal(p.position)}  ·  ${shortResult}`
