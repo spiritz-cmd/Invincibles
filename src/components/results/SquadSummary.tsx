@@ -41,13 +41,13 @@ export function SquadSummary() {
           onAssign={(id, slot) => assignSlot(id, slot)}
         />
         <div className="mt-2 space-y-1">
-          {[['Attack', attack, 'red'], ['Midfield', midfield, 'green'], ['Defence', defence, 'blue'], ['GK', gk, 'amber']].map(([label, val, color]) => (
-            <div key={label as string} className="flex items-center gap-2">
-              <span className="text-zinc-500 text-xs w-14">{label as string}</span>
+          {([['Attack', attack, 'bg-red-500'], ['Midfield', midfield, 'bg-green-500'], ['Defence', defence, 'bg-blue-500'], ['GK', gk, 'bg-amber-500']] as [string, number, string][]).map(([label, val, barClass]) => (
+            <div key={label} className="flex items-center gap-2">
+              <span className="text-zinc-500 text-xs w-14">{label}</span>
               <div className="flex-1 bg-zinc-800 rounded-full h-1.5">
-                <div className={`h-1.5 rounded-full bg-${color as string}-500`} style={{ width: `${((val as number) - 60) / 40 * 100}%` }} />
+                <div className={`h-1.5 rounded-full ${barClass}`} style={{ width: `${(val - 60) / 40 * 100}%` }} />
               </div>
-              <span className="text-zinc-400 text-xs w-6 text-right">{(val as number) || '—'}</span>
+              <span className="text-zinc-400 text-xs w-6 text-right">{val || '—'}</span>
             </div>
           ))}
         </div>
