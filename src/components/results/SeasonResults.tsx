@@ -163,8 +163,8 @@ function generateShareImage(p: ShareParams): string {
   const ROW = 22
   const half = Math.ceil(p.players.length / 2)
   const playerRows = Math.max(half, p.players.length - half)
-  const awardRows = ((p.goldenBoot || p.goldenGlove) ? 1 : 0) + (p.pots ? 1 : 0)
-  const H = 24 + 44 + 78 + 24 + 44 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
+  const awardRows = ((p.goldenBoot || p.goldenGlove) ? 1 : 0) + 1
+  const H = 24 + 44 + 78 + 24 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
 
   const canvas = document.createElement('canvas')
   canvas.width = W * dpr; canvas.height = H * dpr
@@ -208,39 +208,12 @@ function generateShareImage(p: ShareParams): string {
     ctx.fillText(label, cx, y + 66)
   })
   y += 78
+  const shortResult = p.finalPosition.replace(/ \(.*\)$/, '')
   ctx.fillStyle = '#d4d4d8'; ctx.font = 'bold 12px system-ui, -apple-system, sans-serif'
-  ctx.fillText(`${p.totalPts} pts  ·  Finished ${ordinal(p.position)}`, W / 2, y); y += 20
+  let ptsLine = `${p.totalPts} pts  ·  Finished ${ordinal(p.position)}  ·  ${shortResult}`
+  while (ptsLine.length > 1 && ctx.measureText(ptsLine).width > W - 48) ptsLine = ptsLine.slice(0, -1)
+  ctx.fillText(ptsLine, W / 2, y); y += 24
   ctx.textAlign = 'left'
-
-  // Result banner
-  const bannerY = y
-  const bannerH = 36
-  let bannerBg: string, bannerBorder: string, bannerLabel: string, bannerTextColor: string
-  if (p.perfectRun) {
-    bannerBg = '#422006'; bannerBorder = '#d97706'
-    bannerLabel = 'PERFECT RUN  —  15W  0D  0L  —  CHAMPIONS'
-    bannerTextColor = '#fde047'
-  } else if (p.won) {
-    bannerBg = '#1c1400'; bannerBorder = '#a16207'
-    bannerLabel = 'CHAMPIONS LEAGUE WINNER'
-    bannerTextColor = '#fbbf24'
-  } else {
-    const isElim = p.finalPosition.startsWith('Eliminated')
-    bannerBg = isElim ? '#1c0808' : '#18181b'
-    bannerBorder = isElim ? '#7f1d1d' : '#52525b'
-    bannerTextColor = isElim ? '#f87171' : '#d4d4d4'
-    bannerLabel = p.finalPosition.toUpperCase()
-  }
-  ctx.fillStyle = bannerBg; rrect(ctx, 24, bannerY, W - 48, bannerH, 6); ctx.fill()
-  ctx.strokeStyle = bannerBorder; ctx.lineWidth = 1; rrect(ctx, 24, bannerY, W - 48, bannerH, 6); ctx.stroke()
-  ctx.fillStyle = bannerTextColor; ctx.font = 'bold 11px system-ui, -apple-system, sans-serif'
-  ctx.textAlign = 'center'
-  let bl = bannerLabel
-  while (bl.length > 1 && ctx.measureText(bl).width > W - 72) bl = bl.slice(0, -1)
-  if (bl !== bannerLabel) bl += '…'
-  ctx.fillText(bl, W / 2, bannerY + bannerH / 2 + 4)
-  ctx.textAlign = 'left'
-  y += bannerH + 8
 
   // Divider
   ctx.strokeStyle = '#27272a'; ctx.lineWidth = 1
@@ -304,10 +277,34 @@ function generateShareImage(p: ShareParams): string {
     if (p.goldenGlove) drawAward('🧤', 'GOLDEN GLOVE', p.goldenGlove[0], `${p.goldenGlove[1]} clean sheets`, both ? 24 + aW + 12 : 24, y, aW)
     y += 64
   }
-  if (p.pots) {
-    drawAward('⭐', 'PLAYER OF THE SEASON', p.pots[0], `${p.pots[1]} goals`, 24, y, W - 48)
-    y += 64
-  }
+
+  // Bottom row: PoTS (half) + Result tile (half)
+  const halfW = (W - 48 - 12) / 2
+  if (p.pots) drawAward('⭐', 'PLAYER OF THE SEASON', p.pots[0], `${p.pots[1]} goals`, 24, y, halfW)
+
+  // Result tile
+  const rx = 24 + halfW + 12
+  const isChamp = p.won
+  const isPerfect = p.perfectRun
+  const isElim = p.finalPosition.startsWith('Eliminated')
+  const rtBg = isPerfect ? '#2a1800' : isChamp ? '#1a1200' : isElim ? '#1a0808' : '#18181b'
+  const rtBorder = isPerfect ? '#d97706' : isChamp ? '#a16207' : isElim ? '#7f1d1d' : '#52525b'
+  const rtColor = isPerfect ? '#fde047' : isChamp ? '#fbbf24' : isElim ? '#f87171' : '#d4d4d4'
+  const rtIcon = isPerfect ? '★' : isChamp ? '🏆' : isElim ? '⚽' : '🥈'
+  const rtLabel = isPerfect ? 'PERFECT RUN' : isChamp ? 'CHAMPIONS' : isElim ? shortResult.replace(/^Eliminated in /, '') : 'RUNNER-UP'
+  const rtSub = isPerfect ? '15W · 0D · 0L' : isChamp ? 'League Winner' : isElim ? 'Eliminated' : p.finalPosition.replace(/^Runner-Up \(Final vs /, 'vs ').replace(/\)$/, '')
+  ctx.fillStyle = rtBg; rrect(ctx, rx, y, halfW, 56, 6); ctx.fill()
+  ctx.strokeStyle = rtBorder; ctx.lineWidth = 1; rrect(ctx, rx, y, halfW, 56, 6); ctx.stroke()
+  ctx.fillStyle = '#52525b'; ctx.font = '9px system-ui, -apple-system, sans-serif'
+  ctx.fillText(`${rtIcon}  FINAL RESULT`, rx + 10, y + 14)
+  ctx.fillStyle = rtColor; ctx.font = 'bold 12px system-ui, -apple-system, sans-serif'
+  let rl = rtLabel
+  while (rl.length > 1 && ctx.measureText(rl).width > halfW - 20) rl = rl.slice(0, -1)
+  if (rl !== rtLabel) rl += '…'
+  ctx.fillText(rl, rx + 10, y + 30)
+  ctx.fillStyle = '#71717a'; ctx.font = '10px system-ui, -apple-system, sans-serif'
+  ctx.fillText(rtSub, rx + 10, y + 44)
+  y += 64
 
   // Footer
   ctx.fillStyle = '#3f3f46'; ctx.font = '9px system-ui, -apple-system, sans-serif'
