@@ -142,7 +142,14 @@ export const useGameStore = create<GameState>()(
 
       goToPhase: (phase) => set({ phase }),
 
-      resetGame: () => set({ ...defaultState }),
+      resetGame: () => set((state) => ({
+        ...defaultState,
+        formation: state.formation,
+        rerollCount: state.rerollCount,
+        showRatings: state.showRatings,
+        draftMode: state.draftMode,
+        ratingsMode: state.ratingsMode,
+      })),
     }),
     {
       name: 'invincibles-settings',
