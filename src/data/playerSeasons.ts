@@ -555,9 +555,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'neymar', name: 'Neymar', nationality: 'Brazil', positions: ['LW', 'ST', 'AM'], season: '2018-19', club: 'Paris Saint-Germain', rating: 91, clApps: 8 },
   { id: 'neymar', name: 'Neymar', nationality: 'Brazil', positions: ['LW', 'ST', 'AM'], season: '2019-20', club: 'Paris Saint-Germain', rating: 91, clApps: 8 },
   { id: 'neymar', name: 'Neymar', nationality: 'Brazil', positions: ['LW', 'ST', 'AM'], season: '2020-21', club: 'Paris Saint-Germain', rating: 89, clApps: 9 },
-  { id: 'mo-salah', name: 'Mohamed Salah', nationality: 'Egypt', positions: ['RW', 'ST'], season: '2017-18', club: 'Liverpool', rating: 91, clApps: 13 },
-  { id: 'mo-salah', name: 'Mohamed Salah', nationality: 'Egypt', positions: ['RW', 'ST'], season: '2018-19', club: 'Liverpool', rating: 90, clApps: 13 },
-  { id: 'mo-salah', name: 'Mohamed Salah', nationality: 'Egypt', positions: ['RW', 'ST'], season: '2021-22', club: 'Liverpool', rating: 91, clApps: 13 },
   { id: 'mo-salah', name: 'Mohamed Salah', nationality: 'Egypt', positions: ['RW', 'ST'], season: '2024-25', club: 'Liverpool', rating: 90, clApps: 10 },
   { id: 'mo-salah', name: 'Mohamed Salah', nationality: 'Egypt', positions: ['RW', 'ST'], season: '2025-26', club: 'Liverpool', rating: 89, clApps: 6 },
   { id: 'robinho', name: 'Robinho', nationality: 'Brazil', positions: ['LW', 'RW'], season: '2004-05', club: 'Real Madrid', rating: 84, clApps: 8 },
@@ -731,9 +728,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'gabriel-jesus', name: 'Gabriel Jesus', nationality: 'Brazil', positions: ['ST', 'LW', 'RW'], season: '2023-24', club: 'Arsenal', rating: 84, clApps: 9 },
   { id: 'gabriel-jesus', name: 'Gabriel Jesus', nationality: 'Brazil', positions: ['ST', 'LW', 'RW'], season: '2024-25', club: 'Arsenal', rating: 82, clApps: 8 },
   { id: 'gabriel-jesus', name: 'Gabriel Jesus', nationality: 'Brazil', positions: ['ST', 'LW', 'RW'], season: '2025-26', club: 'Arsenal', rating: 83, clApps: 6 },
-  { id: 'firmino', name: 'Roberto Firmino', nationality: 'Brazil', positions: ['ST', 'AM', 'CF'], season: '2017-18', club: 'Liverpool', rating: 86, clApps: 13 },
-  { id: 'firmino', name: 'Roberto Firmino', nationality: 'Brazil', positions: ['ST', 'AM', 'CF'], season: '2018-19', club: 'Liverpool', rating: 87, clApps: 13 },
-  { id: 'firmino', name: 'Roberto Firmino', nationality: 'Brazil', positions: ['ST', 'AM', 'CF'], season: '2021-22', club: 'Liverpool', rating: 85, clApps: 13 },
   { id: 'ibrahima-konate', name: 'Ibrahima Konaté', nationality: 'France', positions: ['CB'], season: '2021-22', club: 'Liverpool', rating: 84, clApps: 10 },
   { id: 'ibrahima-konate', name: 'Ibrahima Konaté', nationality: 'France', positions: ['CB'], season: '2022-23', club: 'Liverpool', rating: 85, clApps: 9 },
   { id: 'ibrahima-konate', name: 'Ibrahima Konaté', nationality: 'France', positions: ['CB'], season: '2025-26', club: 'Liverpool', rating: 85, clApps: 6 },
@@ -5663,7 +5657,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'emre-int', name: 'Emre Belözoğlu', nationality: 'Turkey', positions: ['CM', 'DM'], season: '2002-03', club: 'Inter Milan', rating: 83, clApps: 14 },
   { id: 'czanetti-int', name: 'Cristiano Zanetti', nationality: 'Italy', positions: ['CM', 'DM'], season: '2002-03', club: 'Inter Milan', rating: 80, clApps: 14 },
   { id: 'recoba-int', name: 'Álvaro Recoba', nationality: 'Uruguay', positions: ['AM', 'LW'], season: '2002-03', club: 'Inter Milan', rating: 82, clApps: 14 },
-  { id: 'vieri-int', name: 'Christian Vieri', nationality: 'Italy', positions: ['ST', 'CF'], season: '2002-03', club: 'Inter Milan', rating: 91, clApps: 14 },
   { id: 'crespo-int', name: 'Hernán Crespo', nationality: 'Argentina', positions: ['ST', 'CF'], season: '2002-03', club: 'Inter Milan', rating: 88, clApps: 14 },
   { id: 'sukur-int', name: 'Hakan Şükür', nationality: 'Turkey', positions: ['ST', 'CF'], season: '2002-03', club: 'Inter Milan', rating: 80, clApps: 14 },
 
@@ -5730,7 +5723,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'giovanni-bar', name: 'Giovanni', nationality: 'Brazil', positions: ['AM', 'CM'], season: '1998-99', club: 'Barcelona', rating: 82, clApps: 10 },
   { id: 'figo-bar', name: 'Luís Figo', nationality: 'Portugal', positions: ['RW', 'LW'], season: '1998-99', club: 'Barcelona', rating: 92, clApps: 10 },
   { id: 'rivaldo-bar', name: 'Rivaldo', nationality: 'Brazil', positions: ['LW', 'AM'], season: '1998-99', club: 'Barcelona', rating: 95, clApps: 10 },
-  { id: 'kluivert-bar', name: 'Patrick Kluivert', nationality: 'Netherlands', positions: ['ST', 'CF'], season: '1998-99', club: 'Barcelona', rating: 89, clApps: 10 },
 
   // ── Barcelona 2000-01 (GK1 DEF4 MID3 ATT3 = 11) ──
   { id: 'bonano-bar', name: 'Roberto Bonano', nationality: 'Argentina', positions: ['GK'], season: '2000-01', club: 'Barcelona', rating: 79, clApps: 8 },
@@ -5754,8 +5746,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'xavi-bar', name: 'Xavi Hernández', nationality: 'Spain', positions: ['CM'], season: '2001-02', club: 'Barcelona', rating: 84, clApps: 8 },
   { id: 'cocu-bar', name: 'Phillip Cocu', nationality: 'Netherlands', positions: ['CM', 'DM'], season: '2001-02', club: 'Barcelona', rating: 83, clApps: 8 },
   { id: 'petit-bar', name: 'Emmanuel Petit', nationality: 'France', positions: ['DM', 'CM'], season: '2001-02', club: 'Barcelona', rating: 82, clApps: 8 },
-  { id: 'rivaldo-bar', name: 'Rivaldo', nationality: 'Brazil', positions: ['LW', 'AM'], season: '2001-02', club: 'Barcelona', rating: 96, clApps: 8 },
-  { id: 'kluivert-bar', name: 'Patrick Kluivert', nationality: 'Netherlands', positions: ['ST', 'CF'], season: '2001-02', club: 'Barcelona', rating: 89, clApps: 8 },
   { id: 'saviola-bar', name: 'Javier Saviola', nationality: 'Argentina', positions: ['ST', 'CF'], season: '2001-02', club: 'Barcelona', rating: 86, clApps: 8 },
 
   // ── Barcelona 2002-03 (GK1 DEF4 MID3 ATT3 = 11) ──
@@ -5892,7 +5882,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   // ── Inter Milan 2004-05 (GK1 DEF4 MID3 ATT3 = 11) ──
   { id: 'julio-cesar-int', name: 'Júlio César', nationality: 'Brazil', positions: ['GK'], season: '2004-05', club: 'Inter Milan', rating: 84, clApps: 8 },
   { id: 'zanetti-int', name: 'Javier Zanetti', nationality: 'Argentina', positions: ['RB', 'CM'], season: '2004-05', club: 'Inter Milan', rating: 89, clApps: 8 },
-  { id: 'materazzi-int-0405', name: 'Marco Materazzi', nationality: 'Italy', positions: ['CB'], season: '2004-05', club: 'Inter Milan', rating: 82, clApps: 8 },
   { id: 'cordoba-int', name: 'Iván Córdoba', nationality: 'Colombia', positions: ['CB'], season: '2004-05', club: 'Inter Milan', rating: 85, clApps: 8 },
   { id: 'materazzi-int', name: 'Marco Materazzi', nationality: 'Italy', positions: ['CB'], season: '2004-05', club: 'Inter Milan', rating: 83, clApps: 8 },
   { id: 'stankovic-int', name: 'Dejan Stanković', nationality: 'Serbia', positions: ['CM', 'DM'], season: '2004-05', club: 'Inter Milan', rating: 84, clApps: 8 },
@@ -5990,7 +5979,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'makelele-che', name: 'Claude Makélélé', nationality: 'France', positions: ['DM', 'CM'], season: '2005-06', club: 'Chelsea', rating: 90, clApps: 12 },
   { id: 'essien-che', name: 'Michael Essien', nationality: 'Ghana', positions: ['CM', 'DM'], season: '2005-06', club: 'Chelsea', rating: 87, clApps: 12 },
   { id: 'drogba-che', name: 'Didier Drogba', nationality: 'Ivory Coast', positions: ['ST', 'CF'], season: '2005-06', club: 'Chelsea', rating: 90, clApps: 12 },
-  { id: 'shevchenko-che', name: 'Arjen Robben', nationality: 'Netherlands', positions: ['RW', 'LW'], season: '2005-06', club: 'Chelsea', rating: 87, clApps: 12 },
   { id: 'joe-cole-che', name: 'Joe Cole', nationality: 'England', positions: ['LW', 'AM'], season: '2005-06', club: 'Chelsea', rating: 82, clApps: 12 },
 
   // ── Chelsea 2006-07 (GK1 DEF4 MID3 ATT3 = 11) ──
@@ -6002,7 +5990,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'lampard-che', name: 'Frank Lampard', nationality: 'England', positions: ['CM', 'AM'], season: '2006-07', club: 'Chelsea', rating: 90, clApps: 12 },
   { id: 'makelele-che', name: 'Claude Makélélé', nationality: 'France', positions: ['DM', 'CM'], season: '2006-07', club: 'Chelsea', rating: 89, clApps: 12 },
   { id: 'essien-che', name: 'Michael Essien', nationality: 'Ghana', positions: ['CM', 'DM'], season: '2006-07', club: 'Chelsea', rating: 88, clApps: 12 },
-  { id: 'drogba-che', name: 'Didier Drogba', nationality: 'Ivory Coast', positions: ['ST', 'CF'], season: '2006-07', club: 'Chelsea', rating: 91, clApps: 12 },
   { id: 'sheva-che', name: 'Andriy Shevchenko', nationality: 'Ukraine', positions: ['ST', 'CF'], season: '2006-07', club: 'Chelsea', rating: 85, clApps: 12 },
   { id: 'joe-cole-che', name: 'Joe Cole', nationality: 'England', positions: ['LW', 'AM'], season: '2006-07', club: 'Chelsea', rating: 82, clApps: 12 },
 
@@ -6029,13 +6016,11 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'emerson-rma', name: 'Emerson', nationality: 'Brazil', positions: ['DM', 'CM'], season: '2006-07', club: 'Real Madrid', rating: 83, clApps: 12 },
   { id: 'diarra-rma', name: 'Mahamadou Diarra', nationality: 'Mali', positions: ['DM', 'CM'], season: '2006-07', club: 'Real Madrid', rating: 82, clApps: 12 },
   { id: 'raul-rma', name: 'Raúl', nationality: 'Spain', positions: ['CF', 'ST'], season: '2006-07', club: 'Real Madrid', rating: 88, clApps: 12 },
-  { id: 'van-nistelrooy-rma', name: 'Ruud van Nistelrooy', nationality: 'Netherlands', positions: ['ST', 'CF'], season: '2006-07', club: 'Real Madrid', rating: 90, clApps: 12 },
   { id: 'robinho-rma', name: 'Robinho', nationality: 'Brazil', positions: ['LW', 'RW'], season: '2006-07', club: 'Real Madrid', rating: 85, clApps: 12 },
 
   // ── Real Madrid 2007-08 (GK1 DEF4 MID3 ATT3 = 11) ──
   { id: 'casillas-rma', name: 'Iker Casillas', nationality: 'Spain', positions: ['GK'], season: '2007-08', club: 'Real Madrid', rating: 92, clApps: 12 },
   { id: 'sergio-ramos-rma', name: 'Sergio Ramos', nationality: 'Spain', positions: ['RB', 'CB'], season: '2007-08', club: 'Real Madrid', rating: 87, clApps: 12 },
-  { id: 'cannavaro-rma', name: 'Fabio Cannavaro', nationality: 'Italy', positions: ['CB'], season: '2007-08', club: 'Real Madrid', rating: 90, clApps: 12 },
   { id: 'pepe-rma', name: 'Pepe', nationality: 'Portugal', positions: ['CB'], season: '2007-08', club: 'Real Madrid', rating: 86, clApps: 12 },
   { id: 'marcelo-rma', name: 'Marcelo', nationality: 'Brazil', positions: ['LB', 'LWB'], season: '2007-08', club: 'Real Madrid', rating: 83, clApps: 12 },
   { id: 'guti-rma', name: 'Guti', nationality: 'Spain', positions: ['AM', 'CM'], season: '2007-08', club: 'Real Madrid', rating: 84, clApps: 12 },
@@ -6051,7 +6036,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'pepe-rma', name: 'Pepe', nationality: 'Portugal', positions: ['CB'], season: '2008-09', club: 'Real Madrid', rating: 87, clApps: 12 },
   { id: 'metzelder-rma', name: 'Christoph Metzelder', nationality: 'Germany', positions: ['CB'], season: '2008-09', club: 'Real Madrid', rating: 82, clApps: 12 },
   { id: 'marcelo-rma', name: 'Marcelo', nationality: 'Brazil', positions: ['LB', 'LWB'], season: '2008-09', club: 'Real Madrid', rating: 84, clApps: 12 },
-  { id: 'sneijder-rma', name: 'Wesley Sneijder', nationality: 'Netherlands', positions: ['CM', 'AM'], season: '2008-09', club: 'Real Madrid', rating: 88, clApps: 12 },
   { id: 'guti-rma', name: 'Guti', nationality: 'Spain', positions: ['AM', 'CM'], season: '2008-09', club: 'Real Madrid', rating: 83, clApps: 12 },
   { id: 'diarra-rma', name: 'Mahamadou Diarra', nationality: 'Mali', positions: ['DM', 'CM'], season: '2008-09', club: 'Real Madrid', rating: 82, clApps: 12 },
   { id: 'raul-rma', name: 'Raúl', nationality: 'Spain', positions: ['CF', 'ST'], season: '2008-09', club: 'Real Madrid', rating: 87, clApps: 12 },
@@ -6305,10 +6289,8 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'varane-mun', name: 'Raphaël Varane', nationality: 'France', positions: ['CB'], season: '2023-24', club: 'Manchester United', rating: 85, clApps: 12 },
   { id: 'lindelof-mun', name: 'Victor Lindelöf', nationality: 'Sweden', positions: ['CB'], season: '2023-24', club: 'Manchester United', rating: 82, clApps: 12 },
   { id: 'shaw-mun', name: 'Luke Shaw', nationality: 'England', positions: ['LB'], season: '2023-24', club: 'Manchester United', rating: 82, clApps: 12 },
-  { id: 'casemiro-mun', name: 'Casemiro', nationality: 'Brazil', positions: ['DM', 'CM'], season: '2023-24', club: 'Manchester United', rating: 87, clApps: 12 },
   { id: 'brunofernandes-mun', name: 'Bruno Fernandes', nationality: 'Portugal', positions: ['CM', 'AM'], season: '2023-24', club: 'Manchester United', rating: 89, clApps: 12 },
   { id: 'mctominay-mun', name: 'Scott McTominay', nationality: 'Scotland', positions: ['CM', 'DM'], season: '2023-24', club: 'Manchester United', rating: 80, clApps: 12 },
-  { id: 'rashford-mun', name: 'Marcus Rashford', nationality: 'England', positions: ['LW', 'ST'], season: '2023-24', club: 'Manchester United', rating: 87, clApps: 12 },
   { id: 'hojlund-mun', name: 'Rasmus Højlund', nationality: 'Denmark', positions: ['ST', 'CF'], season: '2023-24', club: 'Manchester United', rating: 79, clApps: 12 },
   { id: 'antony-mun', name: 'Antony', nationality: 'Brazil', positions: ['RW', 'LW'], season: '2023-24', club: 'Manchester United', rating: 79, clApps: 12 },
 
@@ -6318,10 +6300,8 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'deligt-mun', name: 'Matthijs de Ligt', nationality: 'Netherlands', positions: ['CB'], season: '2024-25', club: 'Manchester United', rating: 85, clApps: 12 },
   { id: 'yoro-mun', name: 'Leny Yoro', nationality: 'France', positions: ['CB'], season: '2024-25', club: 'Manchester United', rating: 82, clApps: 12 },
   { id: 'shaw-mun', name: 'Luke Shaw', nationality: 'England', positions: ['LB'], season: '2024-25', club: 'Manchester United', rating: 81, clApps: 12 },
-  { id: 'casemiro-mun', name: 'Casemiro', nationality: 'Brazil', positions: ['DM', 'CM'], season: '2024-25', club: 'Manchester United', rating: 85, clApps: 12 },
   { id: 'brunofernandes-mun', name: 'Bruno Fernandes', nationality: 'Portugal', positions: ['CM', 'AM'], season: '2024-25', club: 'Manchester United', rating: 89, clApps: 12 },
   { id: 'ugarte-mun', name: 'Manuel Ugarte', nationality: 'Uruguay', positions: ['DM', 'CM'], season: '2024-25', club: 'Manchester United', rating: 82, clApps: 12 },
-  { id: 'rashford-mun', name: 'Marcus Rashford', nationality: 'England', positions: ['LW', 'ST'], season: '2024-25', club: 'Manchester United', rating: 86, clApps: 12 },
   { id: 'hojlund-mun', name: 'Rasmus Højlund', nationality: 'Denmark', positions: ['ST', 'CF'], season: '2024-25', club: 'Manchester United', rating: 80, clApps: 12 },
   { id: 'garnacho-mun', name: 'Alejandro Garnacho', nationality: 'Argentina', positions: ['RW', 'LW'], season: '2024-25', club: 'Manchester United', rating: 81, clApps: 12 },
 
@@ -6512,7 +6492,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   // ── Batch 46 ──
 
   // Atletico Madrid 2017-18 (GK1 DEF4 MID3 ATT3 = 11)
-  { id: 'oblak-atm', name: 'Jan Oblak', nationality: 'Slovenia', positions: ['GK'], season: '2017-18', club: 'Atletico Madrid', rating: 91, clApps: 12 },
   { id: 'godin-atm', name: 'Diego Godín', nationality: 'Uruguay', positions: ['CB'], season: '2017-18', club: 'Atletico Madrid', rating: 89, clApps: 12 },
   { id: 'gimenez-atm', name: 'José Giménez', nationality: 'Uruguay', positions: ['CB'], season: '2017-18', club: 'Atletico Madrid', rating: 85, clApps: 12 },
   { id: 'vrsaljko-atm', name: 'Šime Vrsaljko', nationality: 'Croatia', positions: ['RB'], season: '2017-18', club: 'Atletico Madrid', rating: 82, clApps: 12 },
@@ -6534,7 +6513,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'llorente-atm', name: 'Marcos Llorente', nationality: 'Spain', positions: ['CM', 'AM'], season: '2020-21', club: 'Atletico Madrid', rating: 86, clApps: 12 },
   { id: 'saul-atm', name: 'Saúl Ñíguez', nationality: 'Spain', positions: ['CM', 'DM'], season: '2020-21', club: 'Atletico Madrid', rating: 83, clApps: 12 },
   { id: 'felix-atm', name: 'João Félix', nationality: 'Portugal', positions: ['LW', 'AM'], season: '2020-21', club: 'Atletico Madrid', rating: 86, clApps: 12 },
-  { id: 'suarez-atm', name: 'Luis Suárez', nationality: 'Uruguay', positions: ['ST', 'CF'], season: '2020-21', club: 'Atletico Madrid', rating: 87, clApps: 12 },
   { id: 'carrasco-atm', name: 'Yannick Carrasco', nationality: 'Belgium', positions: ['LW', 'RW'], season: '2020-21', club: 'Atletico Madrid', rating: 82, clApps: 12 },
 
   // Atletico Madrid 2021-22 (GK1 DEF4 MID3 ATT3 = 11)
@@ -6580,7 +6558,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'terstegen-bar', name: 'Marc-André ter Stegen', nationality: 'Germany', positions: ['GK'], season: '2016-17', club: 'Barcelona', rating: 89, clApps: 12 },
   { id: 'sergiroberto-bar', name: 'Sergi Roberto', nationality: 'Spain', positions: ['RB', 'CM'], season: '2016-17', club: 'Barcelona', rating: 83, clApps: 12 },
   { id: 'pique-bar', name: 'Gerard Piqué', nationality: 'Spain', positions: ['CB'], season: '2016-17', club: 'Barcelona', rating: 89, clApps: 12 },
-  { id: 'umtiti-bar', name: 'Samuel Umtiti', nationality: 'France', positions: ['CB'], season: '2016-17', club: 'Barcelona', rating: 86, clApps: 12 },
   { id: 'jordiAlba-bar', name: 'Jordi Alba', nationality: 'Spain', positions: ['LB'], season: '2016-17', club: 'Barcelona', rating: 88, clApps: 12 },
   { id: 'busquets-bar', name: 'Sergio Busquets', nationality: 'Spain', positions: ['DM', 'CM'], season: '2016-17', club: 'Barcelona', rating: 89, clApps: 12 },
   { id: 'iniesta-bar', name: 'Andrés Iniesta', nationality: 'Spain', positions: ['CM', 'AM'], season: '2016-17', club: 'Barcelona', rating: 91, clApps: 12 },
@@ -6612,7 +6589,6 @@ export const PLAYER_ROWS: PlayerRow[] = [
   { id: 'pedri-bar', name: 'Pedri', nationality: 'Spain', positions: ['CM', 'AM'], season: '2020-21', club: 'Barcelona', rating: 87, clApps: 12 },
   { id: 'dejong-bar', name: 'Frenkie de Jong', nationality: 'Netherlands', positions: ['CM', 'DM'], season: '2020-21', club: 'Barcelona', rating: 88, clApps: 12 },
   { id: 'messi-bar', name: 'Lionel Messi', nationality: 'Argentina', positions: ['RW', 'CF'], season: '2020-21', club: 'Barcelona', rating: 96, clApps: 12 },
-  { id: 'griezmann-bar', name: 'Antoine Griezmann', nationality: 'France', positions: ['CF', 'LW'], season: '2020-21', club: 'Barcelona', rating: 88, clApps: 12 },
   { id: 'dembele-bar', name: 'Ousmane Dembélé', nationality: 'France', positions: ['LW', 'RW'], season: '2020-21', club: 'Barcelona', rating: 84, clApps: 12 },
 
   // Arsenal 2016-17 (GK1 DEF4 MID3 ATT3 = 11)
