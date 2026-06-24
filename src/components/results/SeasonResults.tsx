@@ -154,6 +154,7 @@ interface ShareParams {
   goldenBoot: [string, number] | null
   goldenGlove: [string, number] | null
   pots: [string, number] | null
+  finalPosition: string; won: boolean; perfectRun: boolean
 }
 
 function generateShareImage(p: ShareParams): string {
@@ -163,7 +164,7 @@ function generateShareImage(p: ShareParams): string {
   const half = Math.ceil(p.players.length / 2)
   const playerRows = Math.max(half, p.players.length - half)
   const awardRows = ((p.goldenBoot || p.goldenGlove) ? 1 : 0) + (p.pots ? 1 : 0)
-  const H = 24 + 44 + 16 + 74 + 24 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
+  const H = 24 + 44 + 78 + 24 + 44 + 1 + 16 + playerRows * ROW + 16 + 1 + 16 + awardRows * 64 + 28
 
   const canvas = document.createElement('canvas')
   canvas.width = W * dpr; canvas.height = H * dpr
@@ -208,8 +209,38 @@ function generateShareImage(p: ShareParams): string {
   })
   y += 78
   ctx.fillStyle = '#d4d4d8'; ctx.font = 'bold 12px system-ui, -apple-system, sans-serif'
-  ctx.fillText(`${p.totalPts} pts  ·  Finished ${ordinal(p.position)}`, W / 2, y); y += 24
+  ctx.fillText(`${p.totalPts} pts  ·  Finished ${ordinal(p.position)}`, W / 2, y); y += 20
   ctx.textAlign = 'left'
+
+  // Result banner
+  const bannerY = y
+  const bannerH = 36
+  let bannerBg: string, bannerBorder: string, bannerLabel: string, bannerTextColor: string
+  if (p.perfectRun) {
+    bannerBg = '#422006'; bannerBorder = '#d97706'
+    bannerLabel = 'PERFECT RUN  —  15W  0D  0L  —  CHAMPIONS'
+    bannerTextColor = '#fde047'
+  } else if (p.won) {
+    bannerBg = '#1c1400'; bannerBorder = '#a16207'
+    bannerLabel = 'CHAMPIONS LEAGUE WINNER'
+    bannerTextColor = '#fbbf24'
+  } else {
+    const isElim = p.finalPosition.startsWith('Eliminated')
+    bannerBg = isElim ? '#1c0808' : '#18181b'
+    bannerBorder = isElim ? '#7f1d1d' : '#52525b'
+    bannerTextColor = isElim ? '#f87171' : '#d4d4d4'
+    bannerLabel = p.finalPosition.toUpperCase()
+  }
+  ctx.fillStyle = bannerBg; rrect(ctx, 24, bannerY, W - 48, bannerH, 6); ctx.fill()
+  ctx.strokeStyle = bannerBorder; ctx.lineWidth = 1; rrect(ctx, 24, bannerY, W - 48, bannerH, 6); ctx.stroke()
+  ctx.fillStyle = bannerTextColor; ctx.font = 'bold 11px system-ui, -apple-system, sans-serif'
+  ctx.textAlign = 'center'
+  let bl = bannerLabel
+  while (bl.length > 1 && ctx.measureText(bl).width > W - 72) bl = bl.slice(0, -1)
+  if (bl !== bannerLabel) bl += '…'
+  ctx.fillText(bl, W / 2, bannerY + bannerH / 2 + 4)
+  ctx.textAlign = 'left'
+  y += bannerH + 8
 
   // Divider
   ctx.strokeStyle = '#27272a'; ctx.lineWidth = 1
@@ -355,6 +386,7 @@ export function SeasonResults() {
       players: orderedPlayers,
       showRatings,
       goldenBoot, goldenGlove, pots,
+      finalPosition, won, perfectRun,
     })
     setShareImage(dataUrl)
   }
