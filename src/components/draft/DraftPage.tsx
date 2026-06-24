@@ -6,14 +6,16 @@ import { SpinnerWheel } from './SpinnerWheel'
 import { PlayerList } from './PlayerList'
 import { FormationPitch } from './FormationPitch'
 import { computeOverall } from '../../utils/ratings'
-import { slotStatus } from '../../utils/positionRules'
+import { slotStatus, expandedAccepts } from '../../utils/positionRules'
 
 function bestSlotFor(positions: string[], emptySlots: PositionSlot[]): PositionSlot | undefined {
-  const natural = emptySlots.find(s => positions.some(p => s.accepts[0] === p))
+  const natural = emptySlots.find(s => slotStatus(positions, s) === 'available' && positions.some(p => s.accepts[0] === p))
   if (natural) return natural
-  const okay = emptySlots.find(s => positions.some(p => s.accepts.includes(p)))
-  if (okay) return okay
-  return emptySlots[0]
+  const available = emptySlots.find(s => slotStatus(positions, s) === 'available')
+  if (available) return available
+  const penalty = emptySlots.find(s => slotStatus(positions, s) === 'penalty')
+  if (penalty) return penalty
+  return undefined
 }
 
 export function DraftPage() {
@@ -47,8 +49,8 @@ export function DraftPage() {
   const selectedSlot = selectedSlotId ? f.slots.find(s => s.id === selectedSlotId) ?? null : null
   // Position-first: spinner only offers clubs that have players for the selected slot
   const neededPositions = isPositionFirst && selectedSlot
-    ? selectedSlot.accepts
-    : Array.from(new Set(emptySlots.flatMap(s => s.accepts)))
+    ? expandedAccepts(selectedSlot.accepts)
+    : Array.from(new Set(emptySlots.flatMap(s => expandedAccepts(s.accepts))))
 
   const handlePick = (drafted: DraftedPlayer) => {
     if (drafted.slotId !== null) {
@@ -184,12 +186,12 @@ export function DraftPage() {
                   <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Overall</span>
                   <span className="text-lg font-black text-white">{overall}</span>
                 </div>
-                {([['Attack', attack, 'red'], ['Midfield', midfield, 'green'], ['Defence', defence, 'blue'], ['GK', gk, 'amber']] as const).map(([label, val, color]) => (
+                {([['Attack', attack, 'bg-red-500'], ['Midfield', midfield, 'bg-green-500'], ['Defence', defence, 'bg-blue-500'], ['GK', gk, 'bg-amber-500']] as [string, number, string][]).map(([label, val, barClass]) => (
                   <div key={label} className="flex items-center gap-2">
                     <span className="text-zinc-500 text-[11px] w-14">{label}</span>
                     <div className="flex-1 bg-zinc-800/80 rounded-full h-1">
                       <div
-                        className={`h-1 rounded-full bg-${color}-500`}
+                        className={`h-1 rounded-full ${barClass}`}
                         style={{ width: `${Math.max(0, ((val ?? 0) - 60) / 40 * 100)}%` }}
                       />
                     </div>
