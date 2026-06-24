@@ -49,9 +49,9 @@ export function clubOverall2526(club: string): number {
 // goals (an edge, not a guarantee); Poisson noise keeps every result uncertain,
 // so a stronger side can still drop points.
 function matchGoals(a: number, b: number): [number, number] {
-  const diff = (a - b) / 22
-  const lambdaA = Math.max(0.15, 0.95 + diff * 2)
-  const lambdaB = Math.max(0.15, 0.95 - diff * 2)
+  const diff = (a - b) / 28
+  const lambdaA = Math.max(0.15, 1.1 + diff * 2)
+  const lambdaB = Math.max(0.15, 1.1 - diff * 2)
   return [poisson(lambdaA), poisson(lambdaB)]
 }
 
@@ -127,10 +127,10 @@ export function quickOutcome(userStrength: number): QuickOutcome {
   let won = false
   if (position <= 24) {
     const others = st.filter((s) => !s.isUser)
-    const playoffPool = shuffle(others.slice(8, 24))
-    const koPool = shuffle(others.slice(0, 16))
-    let ki = 0
-    const nextOpp = () => koPool[ki++ % koPool.length]
+    const playoffPool = shuffle(others.slice(8, 24))  // positions 9-24
+    const directPool = shuffle(others.slice(0, 8))    // positions 1-8 (other direct seeds)
+    let di = 0
+    const nextDirect = () => directPool[di++ % directPool.length]
     const tieLost = (oppStrength: number): boolean => {
       const [a1, b1] = matchGoals(userStrength, oppStrength)
       const [a2, b2] = matchGoals(userStrength, oppStrength)
@@ -140,14 +140,21 @@ export function quickOutcome(userStrength: number): QuickOutcome {
     }
     let out = false
     if (position > 8) {
-      const opp = playoffPool[0] ?? nextOpp()
-      if (tieLost(opp.strength)) out = true
+      // Playoff round vs a pos 9-24 team, then R16 vs a direct seed
+      const playoffOpp = playoffPool[0] ?? nextDirect()
+      if (tieLost(playoffOpp.strength)) out = true
+      if (!out && tieLost(nextDirect().strength)) out = true
+    } else {
+      // Direct seed: R16 vs a playoff survivor (pos 9-24)
+      const r16Opp = playoffPool[0] ?? nextDirect()
+      if (tieLost(r16Opp.strength)) out = true
+    }
+    // QF + SF vs other direct seeds
+    if (!out) {
+      for (let r = 0; r < 2 && !out; r++) if (tieLost(nextDirect().strength)) out = true
     }
     if (!out) {
-      for (let r = 0; r < 3 && !out; r++) if (tieLost(nextOpp().strength)) out = true
-    }
-    if (!out) {
-      const [gf, ga] = matchGoals(userStrength, nextOpp().strength)
+      const [gf, ga] = matchGoals(userStrength, nextDirect().strength)
       won = gf > ga || (gf === ga && Math.random() < 0.5)
     }
   }
@@ -235,11 +242,13 @@ export function simulateSeason(
   }
 
   // Knockout opponents are drawn from the real standings (never the user).
+  // Proper UCL seeding: direct seeds (pos 1-8) face playoff survivors in R16;
+  // QF/SF/Final opponents come from the other direct seeds (pos 1-8).
   const others = standings.filter((s) => !s.isUser)
-  const playoffPool = shuffle(others.slice(8, 24))
-  const koPool = shuffle(others.slice(0, 16))
-  let koIdx = 0
-  const nextKoOpp = (): TeamStanding => koPool[koIdx++ % koPool.length]
+  const playoffPool = shuffle(others.slice(8, 24))   // positions 9-24
+  const directPool = shuffle(others.slice(0, 8))     // positions 1-8 (other direct seeds)
+  let directIdx = 0
+  const nextDirectOpp = (): TeamStanding => directPool[directIdx++ % directPool.length]
 
   // Two-legged tie on aggregate; a level aggregate is a coin flip (penalties).
   const playTie = (opp: TeamStanding, stage: string): boolean => {
@@ -253,20 +262,30 @@ export function simulateSeason(
   }
 
   if (advancedAs === 'playoff') {
-    const opp = playoffPool[0] ?? nextKoOpp()
+    const opp = playoffPool[0] ?? nextDirectOpp()
     if (playTie(opp, 'Playoff')) {
       return { ...base, knockoutResults, finalPosition: 'Eliminated in Playoff Round', won: false }
     }
+    // Playoff survivors face a direct seed in R16
+    if (playTie(nextDirectOpp(), 'Round of 16')) {
+      return { ...base, knockoutResults, finalPosition: 'Eliminated in Round of 16', won: false }
+    }
+  } else {
+    // Direct seed: R16 vs a playoff survivor (pos 9-24) — easier early opponent
+    const r16Opp = playoffPool[0] ?? nextDirectOpp()
+    if (playTie(r16Opp, 'Round of 16')) {
+      return { ...base, knockoutResults, finalPosition: 'Eliminated in Round of 16', won: false }
+    }
   }
 
-  for (const roundName of ['Round of 16', 'Quarter-Final', 'Semi-Final']) {
-    if (playTie(nextKoOpp(), roundName)) {
+  for (const roundName of ['Quarter-Final', 'Semi-Final']) {
+    if (playTie(nextDirectOpp(), roundName)) {
       return { ...base, knockoutResults, finalPosition: `Eliminated in ${roundName}`, won: false }
     }
   }
 
   // Final — single leg, coin flip if level.
-  const finalOpp = nextKoOpp()
+  const finalOpp = nextDirectOpp()
   const final = userMatch(userStrength, finalOpp, draftedPlayers, 'Final')
   knockoutResults.push(final)
   let won = final.goalsFor > final.goalsAgainst
